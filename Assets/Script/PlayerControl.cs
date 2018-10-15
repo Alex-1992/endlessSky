@@ -14,8 +14,8 @@ public class PlayerControl : MonoBehaviour
     public static float HP_Recover_Persecond = 50;
     public static float Max_MP = 200;
     public static float Current_MP = 200;
-
     public static float MP_Recover_Persecond = 20;
+    public static float Def = 0;
 
     public static float AttackNum = 50;
     public static float variable_Attack = 1;
@@ -186,14 +186,15 @@ public class PlayerControl : MonoBehaviour
         // List<T> mList = new List<T>();   
         foreach (Transform child in EnemyPool.transform)
         {
+            if (i >= 4 || !child)
+            {
+                break;
+            }
             positionList.Add(child.position);
             // Debug.Log(child.position + "I:" + i);
             // Debug.Log(positionList[i] + "I:" + i);
             i++;
-            if (i >= 5)
-            {
-                break;
-            }
+            
         }
         Sequence s = DOTween.Sequence();
         foreach (Vector3 v in positionList)
