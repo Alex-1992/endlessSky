@@ -26,6 +26,8 @@ public class PlayerControl : MonoBehaviour {
     public static float variable_Continue = 1;
 
     public static bool skillFinished = true;
+    public static Vector3 playerPosition;
+    
 
     public Text GameOverText;
     public Button btn1;
@@ -56,6 +58,7 @@ public class PlayerControl : MonoBehaviour {
     // Use this for initialization
     void Start () {
         audio = GetComponent<AudioSource> ();
+        playerPosition = gameObject.transform.position;
     }
 
     // Update is called once per frame

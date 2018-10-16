@@ -199,6 +199,7 @@ MonoBehaviour:
   CanMove: 1
   progressBar: {fileID: 114621098437477850}
   boom: {fileID: 198044079066824464, guid: 387c1c0f6a13af74f8ea9d5617d18123, type: 2}
+  player: {fileID: 0}
 --- !u!114 &114538471693827604
 MonoBehaviour:
   m_ObjectHideFlags: 1
