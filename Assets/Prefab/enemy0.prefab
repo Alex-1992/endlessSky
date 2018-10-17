@@ -104,14 +104,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1170319847947390}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: -0.95, y: 3.069, z: 0}
   m_LocalScale: {x: 1, y: 0.9773, z: 1}
   m_Children:
   - {fileID: 224807004225932082}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!54 &54252007898623634
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -199,7 +199,6 @@ MonoBehaviour:
   CanMove: 1
   progressBar: {fileID: 114621098437477850}
   boom: {fileID: 198044079066824464, guid: 387c1c0f6a13af74f8ea9d5617d18123, type: 2}
-  player: {fileID: 0}
 --- !u!114 &114538471693827604
 MonoBehaviour:
   m_ObjectHideFlags: 1

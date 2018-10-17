@@ -41,14 +41,17 @@ public class EnemyControl : MonoBehaviour
 
 
         //Vector3 v = new Vector3(PlayerControl.playerPosition.x, PlayerControl.playerPosition.position.y, PlayerControl.playerPosition.position.z);
-        // Debug.DrawLine (PlayerControl.playerPosition, transform.position, Color.yellow);
-        // Quaternion rotation = Quaternion.LookRotation(PlayerControl.playerPosition - transform.position, Vector3.forward);  //获取目标方向
+         Debug.DrawLine (PlayerControl.playerPosition, transform.position, Color.yellow);
+
+
+
+        // Quaternion rotation = Quaternion.LookRotation(new Vector3(0,0,1), PlayerControl.playerPosition);  //获取目标方向
 
         // transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * speed);
 
-        gameObject.transform.LookAt(PlayerControl.playerPosition);
-        gameObject.transform.Rotate(new Vector3(90, 0, 0));
-        gameObject.transform.Rotate(new Vector3(0, -180, -180 - transform.rotation.z));
+        //gameObject.transform.LookAt(PlayerControl.playerPosition);
+        // gameObject.transform.Rotate(new Vector3(90, 0, 0));
+        // gameObject.transform.Rotate(new Vector3(0,0, 180 ));
 
 
         //lock at target Player
@@ -62,6 +65,11 @@ public class EnemyControl : MonoBehaviour
 
         // Quaternion TargetRotation = Quaternion.LookRotation(m_Target.transform.position - transform.position, Vector3.up);
         // transform.rotation = Quaternion.Slerp(transform.rotation, TargetRotation, Time.deltaTime * 2.5f);
+        gameObject.transform.Rotate(new Vector3(180,0, 0 ));
+        Vector3 targetPosition = PlayerControl.playerPosition;
+        targetPosition.z = transform.position.z;
+        transform.LookAt(targetPosition);
+        transform.rotation *= Quaternion.Euler(new Vector3(0, 90, -90));
 
     }
 

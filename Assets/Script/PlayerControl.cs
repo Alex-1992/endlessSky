@@ -63,6 +63,7 @@ public class PlayerControl : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        playerPosition = transform.position;
 
         //----------------玩家移动----------------
         //向上移动
@@ -164,13 +165,14 @@ public class PlayerControl : MonoBehaviour {
         //   Texture2D texture2d = (Texture2D)Resources.Load("/Pic/circle");//更换为红色主题英雄角色图片  
         //   Sprite sp = Sprite.Create(texture2d,spr.sprite.textureRect,new Vector2(0.5f,0.5f));//注意居中显示采用0.5f值  
         //   spr.sprite = sp;  
+        btn3.transform.localScale=new Vector3(1.5f,1.5f,1.5f);
         ((SpriteRenderer) gameObject.GetComponent<Renderer> ()).sprite = CircleSprite;
 
-        Sequence s1 = DOTween.Sequence ();
+        //Sequence s1 = DOTween.Sequence ();
         btn3.interactable = false;
         Vector3 originPos = new Vector3 (0, 0, 0);
         originPos = gameObject.transform.position;
-        s1.Append (btn3.transform.DOScale (new Vector3 (1.5f, 1.5f, 1.5f), 0.1f)).Append (btn3.transform.DOScale (new Vector3 (1, 1, 1), 0.1f));
+        //s1.Append (btn3.transform.DOScale (new Vector3 (1.5f, 1.5f, 1.5f), 0.1f)).Append (btn3.transform.DOScale (new Vector3 (1, 1, 1), 0.1f));
         //btn3.transform.DOScale(new Vector3(2, 2, 2), 0.1f);
         //btn3.transform.DOScale(new Vector3(1, 1, 1), 0.1f);
         float temp = HP_Recover_Persecond;
@@ -201,6 +203,7 @@ public class PlayerControl : MonoBehaviour {
         s.OnComplete (skillStatusChange);
     }
     void skillStatusChange () {
+        btn3.transform.localScale=new Vector3(1,1,1);
         GameControl.enemyCanMove = true;
         btn3.interactable = true;
         HP_Recover_Persecond = 50;
