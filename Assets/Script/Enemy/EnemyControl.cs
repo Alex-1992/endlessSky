@@ -29,10 +29,10 @@ public class EnemyControl : MonoBehaviour
         //     transform.Translate(Vector3.down * speed * Time.deltaTime);
         // }
 
-        if (transform.position.y <= -4)
-        {
-            Destroy(gameObject);
-        }
+        // if (transform.position.y <= -4)
+        // {
+        //     Destroy(gameObject);
+        // }
         if (progressBar.size < 1)
         {
             progressBar.gameObject.SetActive(true);
@@ -41,7 +41,7 @@ public class EnemyControl : MonoBehaviour
 
 
         //Vector3 v = new Vector3(PlayerControl.playerPosition.x, PlayerControl.playerPosition.position.y, PlayerControl.playerPosition.position.z);
-         Debug.DrawLine (PlayerControl.playerPosition, transform.position, Color.yellow);
+         //Debug.DrawLine (PlayerControl.playerPosition, transform.position, Color.yellow);
 
 
 
@@ -65,6 +65,8 @@ public class EnemyControl : MonoBehaviour
 
         // Quaternion TargetRotation = Quaternion.LookRotation(m_Target.transform.position - transform.position, Vector3.up);
         // transform.rotation = Quaternion.Slerp(transform.rotation, TargetRotation, Time.deltaTime * 2.5f);
+
+        
         gameObject.transform.Rotate(new Vector3(180,0, 0 ));
         Vector3 targetPosition = PlayerControl.playerPosition;
         targetPosition.z = transform.position.z;
@@ -77,14 +79,15 @@ public class EnemyControl : MonoBehaviour
     void OnTriggerEnter(Collider obj)
 
     {
+        Debug.Log(" 0000000000000000000000000000000000000000");
         float damage = 0;
         //Debug.Log(obj.gameObject.name);
-        if (obj.gameObject.name == "bullet_common(Clone)")
+        if (obj.gameObject.name == "Player_bullet(Clone)")
         {
             //计算击中伤害 攻击-弹道-自施放-单次伤害
             damage = PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Auto * PlayerControl.variable_Single;
             HP = HP - damage;
-            //Debug.Log(damage);
+            Debug.Log(" 1 11 1 1 11111111111111111111111111111111111111");
             //销毁子弹
             Destroy(obj.gameObject);
         }
@@ -104,7 +107,7 @@ public class EnemyControl : MonoBehaviour
             {
                 //玩家死亡
                 PlayerControl.Current_HP = 0;
-                obj.gameObject.GetComponent<PlayerControl>().GameOver();
+                
             }
             //damage = PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Auto * PlayerControl.variable_Single;
             //Debug.Log("enter range_energy");

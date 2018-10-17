@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BulletControl : MonoBehaviour {
+public class Player_bullet : MonoBehaviour {
 
     // private AudioSource audio;
 
@@ -9,9 +9,6 @@ public class BulletControl : MonoBehaviour {
     public float speed = 10f;
     public float liveTime = 1.0f;
 
-    //爆炸特效
-    //public GameObject effect;
-    public Sprite boom;
     // Use this for initialization
     void Start () {
         //audio = gameObject.GetComponent<AudioSource>();
@@ -28,16 +25,4 @@ public class BulletControl : MonoBehaviour {
             Destroy (gameObject);
         }
     }
-
-    // void OnCollisionEnter2D(Collision2D obj) {
-
-    // 	//实例化粒子特效
-
-    // 	//SpriteRenderer spr = gameObject.GetComponent<SpriteRenderer>();
-    // 	//spr.sprite = boom;
-    // 	gameObject.GetComponent<SpriteRenderer> ().sprite = boom; 
-    //     Destroy(obj.gameObject);
-    //     Destroy(gameObject,2.0f);
-    //     //Destroy(neweffect, 1.0f);
-    // }
 }

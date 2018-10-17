@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour {
 
@@ -27,12 +28,12 @@ public class PlayerControl : MonoBehaviour {
 
     public static bool skillFinished = true;
     public static Vector3 playerPosition;
-    
 
-    public Text GameOverText;
     public Button btn1;
     public Button btn2;
     public Button btn3;
+
+
     public GameObject EnemyPool;
     public Scrollbar progressBarHP;
     public Scrollbar progressBarMP;
@@ -52,11 +53,14 @@ public class PlayerControl : MonoBehaviour {
     private float shotCD = 0;
     public float CD = 0.3f;
 
+    public static SpriteRenderer spr;
+
     //声音资源
     public AudioSource audio;
 
     // Use this for initialization
     void Start () {
+        spr = gameObject.GetComponent<SpriteRenderer> ();
         audio = GetComponent<AudioSource> ();
         playerPosition = gameObject.transform.position;
     }
@@ -141,6 +145,13 @@ public class PlayerControl : MonoBehaviour {
             progressBarMP.size = Current_MP / Max_MP;
         }
 
+        if (Current_HP <= 0) {
+            //progressBarMP.size = 0;
+           
+            //GameOver ();
+        }
+        //obj.gameObject.GetComponent<PlayerControl>().GameOver();
+
     }
 
     void shot () {
@@ -165,7 +176,7 @@ public class PlayerControl : MonoBehaviour {
         //   Texture2D texture2d = (Texture2D)Resources.Load("/Pic/circle");//更换为红色主题英雄角色图片  
         //   Sprite sp = Sprite.Create(texture2d,spr.sprite.textureRect,new Vector2(0.5f,0.5f));//注意居中显示采用0.5f值  
         //   spr.sprite = sp;  
-        btn3.transform.localScale=new Vector3(1.5f,1.5f,1.5f);
+        btn3.transform.localScale = new Vector3 (1.5f, 1.5f, 1.5f);
         ((SpriteRenderer) gameObject.GetComponent<Renderer> ()).sprite = CircleSprite;
 
         //Sequence s1 = DOTween.Sequence ();
@@ -203,7 +214,7 @@ public class PlayerControl : MonoBehaviour {
         s.OnComplete (skillStatusChange);
     }
     void skillStatusChange () {
-        btn3.transform.localScale=new Vector3(1,1,1);
+        btn3.transform.localScale = new Vector3 (1, 1, 1);
         GameControl.enemyCanMove = true;
         btn3.interactable = true;
         HP_Recover_Persecond = 50;
@@ -238,10 +249,16 @@ public class PlayerControl : MonoBehaviour {
     //         Destroy (gameObject);
     //     }
     // }
-    public void GameOver () {
-        progressBarHP.size = 0;
-        GameOverText.text = "GAME OVER";
-        Destroy (gameObject);
+
+    public static void Hitted () {
+
+        if (skillFinished == true) {
+            Sequence s = DOTween.Sequence ();
+            s.Append (spr.DOColor (Color.red, 0.05f)).Append (spr.DOColor (Color.white, 0.05f));
+        }
+
+        //.From();
     }
 
+    
 }
