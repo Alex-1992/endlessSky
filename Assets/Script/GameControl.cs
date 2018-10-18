@@ -4,8 +4,10 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 public class GameControl : MonoBehaviour {
 
+    public GameObject player;
     public Button BtnContinueGame;
     public GameObject[] enemy;
     public GameObject EnemyPool;
@@ -76,14 +78,19 @@ public class GameControl : MonoBehaviour {
     public void ReStartGame () {
         //Application.LoadLevel ("SampleScene");
         Debug.Log ("qqqqqqqqqqqqqqqqqqqqqqqqq");
-        SceneManager.LoadScene ("SampleScene");
+        EditorSceneManager.LoadScene ("SampleScene");
+        //Instantiate (player, new Vector3(0,-2,0), Quaternion.Euler (new Vector3 (0, 0, 0)));
+        PlayerControl.Current_HP = PlayerControl.Max_HP;
         GameOverText.text = "";
         btnRestart.SetActive (false);
+        player.SetActive(true);
     }
 
     public void GameOver () {
+        Debug.Log("00000000000000000000");
+        player.SetActive(false);
         //progressBarHP.size = 0;
-        gameObject.SetActive (false);
+        //gameObject.SetActive (false);
         GameOverText.text = "GAME OVER";
         //Destroy (gameObject);
         btnRestart.SetActive (true);

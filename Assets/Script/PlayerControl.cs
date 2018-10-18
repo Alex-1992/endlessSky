@@ -147,8 +147,9 @@ public class PlayerControl : MonoBehaviour {
 
         if (Current_HP <= 0) {
             //progressBarMP.size = 0;
-           
-            //GameOver ();
+            GameObject.Find("Main Camera").GetComponent<GameControl>().GameOver();
+            //new GameControl().GameOver ();
+            //Destroy(gameObject);
         }
         //obj.gameObject.GetComponent<PlayerControl>().GameOver();
 
