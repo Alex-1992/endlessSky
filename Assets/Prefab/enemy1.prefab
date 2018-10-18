@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  HP: 500
+  HP: 400
   CanMove: 1
   progressBar: {fileID: 114499369385935158}
   boom: {fileID: 198044079066824464, guid: 387c1c0f6a13af74f8ea9d5617d18123, type: 2}

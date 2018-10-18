@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement;
+//using UnityEditor.SceneManagement;
 public class GameControl : MonoBehaviour {
 
     public GameObject player;
@@ -78,7 +78,7 @@ public class GameControl : MonoBehaviour {
     public void ReStartGame () {
         //Application.LoadLevel ("SampleScene");
         Debug.Log ("qqqqqqqqqqqqqqqqqqqqqqqqq");
-        EditorSceneManager.LoadScene ("SampleScene");
+        SceneManager.LoadScene ("SampleScene");
         //Instantiate (player, new Vector3(0,-2,0), Quaternion.Euler (new Vector3 (0, 0, 0)));
         PlayerControl.Current_HP = PlayerControl.Max_HP;
         GameOverText.text = "";
