@@ -1,0 +1,38 @@
+[{
+		"id": "1",
+		"name": "舰载火炮",
+		"describe": "突突突",
+		"img": "jianzaihuopao",
+		"type": "攻击-弹道-单次",
+		"damage_factor": "2",
+		"level": "1",
+		"cd": "0.3",
+		"mp_cost": "5",
+		"script": "Skill_jianzaihuopao"
+	},
+	{
+		"id": "2",
+		"name": "能量场",
+		"describe": "烧烧烧",
+		"img": "nengliangchang",
+		"type": "攻击-范围-持续",
+		"damage_factor": "0.2",
+		"level": "1",
+		"cd": "0",
+		"mp_cost": "1",
+		"script": "Skill_nengliangchang"
+	},
+	{
+		"id": "3",
+		"name": "闪现冲撞",
+		"describe": "撞撞撞",
+		"img": "shanxianchongzhuang",
+		"type": "攻击-范围-单次",
+		"damage_factor": "2",
+		"level": "1",
+		"cd": "2",
+		"mp_cost": "60",
+		"script": "Skill_shanxianchongzhuang"
+	}
+
+]

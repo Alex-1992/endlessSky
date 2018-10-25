@@ -17,9 +17,9 @@ public class GameControl : MonoBehaviour {
     public Text GameOverText;
 
     List<Vector3> enemyPosList = new List<Vector3> () {
-        new Vector3 (-2.2f, 1, 0), new Vector3 (-2.2f, 2, 0), new Vector3 (-2.2f, 3, 0),
+        new Vector3 (-5.2f, 1, 0), new Vector3 (-5.2f, 2, 0), new Vector3 (-5.2f, 3, 0),
         new Vector3 (-1.5f, 4, 0), new Vector3 (0, 4, 0), new Vector3 (1.5f, 4, 0),
-        new Vector3 (2.2f, 1, 0), new Vector3 (2.2f, 2, 0), new Vector3 (2.2f, 3, 0)
+        new Vector3 (5.2f, 1, 0), new Vector3 (5.2f, 2, 0), new Vector3 (5.2f, 3, 0)
     };
     // Use this for initialization
     void Start () {
@@ -39,10 +39,19 @@ public class GameControl : MonoBehaviour {
             }
         }
 
-        if (Time.timeScale > 0 && (Input.GetKey (KeyCode.Escape) || Input.GetKey (KeyCode.Space))) {
-            Time.timeScale = 0;
-            BtnContinueGame.gameObject.SetActive (true);
+        if (Input.GetKeyUp (KeyCode.Escape) || Input.GetKeyUp(KeyCode.Space)) {
+            if(Time.timeScale > 0)
+            {
+                Time.timeScale = 0;
+                BtnContinueGame.gameObject.SetActive(true);
+            }
+            else{ 
+                Time.timeScale = 1;
+                BtnContinueGame.gameObject.SetActive(false);
+            }
+           
         }
+
     }
 
     //生成敌人

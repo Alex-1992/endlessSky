@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using DG.Tweening;
+using LitJson;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour {
 
@@ -33,36 +36,44 @@ public class PlayerControl : MonoBehaviour {
     public Button btn2;
     public Button btn3;
 
-
     public GameObject EnemyPool;
     public Scrollbar progressBarHP;
     public Scrollbar progressBarMP;
     public GameObject Range_energy;
-    //子弹发射点
-    public GameObject shotPointMiddle;
-    public GameObject shotPointLeft;
-    public GameObject shotPointRight;
-    public GameObject shotPointMiddle_down;
-    public GameObject shotPointLeft_down;
-    public GameObject shotPointRight_down;
-    //子弹prefab
-    public GameObject bullet;
+    // //子弹发射点
+    // public GameObject shotPointMiddle;
+    // public GameObject shotPointLeft;
+    // public GameObject shotPointRight;
+    // public GameObject shotPointMiddle_down;
+    // public GameObject shotPointLeft_down;
+    // public GameObject shotPointRight_down;
+
     public Sprite CircleSprite;
     public Sprite OriginSprite;
-    //玩家发射子弹CD
-    private float shotCD = 0;
-    public float CD = 0.3f;
+    // //玩家发射子弹CD
+    // private float shotCD = 0;
+    // public float CD = 0.3f;
 
     public static SpriteRenderer spr;
 
     //声音资源
     public AudioSource audio;
 
+    public List<SkillData> skillList = new List<SkillData> ();
+    public List<SkillData> PlayerSkillList;
+
     // Use this for initialization
     void Start () {
         spr = gameObject.GetComponent<SpriteRenderer> ();
         audio = GetComponent<AudioSource> ();
-        playerPosition = gameObject.transform.position;
+        //playerPosition = gameObject.transform.position;
+        string skillInfo = File.ReadAllText ("Assets/Json/Skill.json", Encoding.UTF8);
+        skillList = JsonMapper.ToObject<List<SkillData>> (skillInfo);
+
+        PlayerSkillList = new List<SkillData> (skillList);
+        Debug.Log (PlayerSkillList[0].describe);
+        Debug.Log (PlayerSkillList[1].describe);
+        Debug.Log (PlayerSkillList[2].describe);
     }
 
     // Update is called once per frame
@@ -71,52 +82,37 @@ public class PlayerControl : MonoBehaviour {
 
         //----------------玩家移动----------------
         //向上移动
-        if (Input.GetKey (KeyCode.UpArrow) && transform.position.y <= 4f) {
+        if (Input.GetKey (KeyCode.UpArrow) && transform.position.y <= 3.8f) {
             transform.Translate (Vector3.up * Time.deltaTime * speed);
         }
         //向下移动
-        if (Input.GetKey (KeyCode.DownArrow) && transform.position.y >= -4f) {
+        if (Input.GetKey (KeyCode.DownArrow) && transform.position.y >= -3.2f) {
             transform.Translate (Vector3.down * Time.deltaTime * speed);
         }
         //向左移动
-        if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x >= -2.2f) {
+        if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x >= -5.2f) {
             transform.Translate (Vector3.left * Time.deltaTime * speed);
         }
         //向右移动
-        if (Input.GetKey (KeyCode.RightArrow) && transform.position.x <= 2.2f) {
+        if (Input.GetKey (KeyCode.RightArrow) && transform.position.x <= 5.2f) {
             transform.Translate (Vector3.right * Time.deltaTime * speed);
         }
 
-        //发射炮弹
-        if (Input.GetKey (KeyCode.Q)) {
-            if (Current_MP >= 10) {
-                btn1.transform.DOScale (new Vector3 (1.5f, 1.5f, 1.5f), 0.1f);
-                shotCD -= Time.deltaTime;
-                shot ();
-            }
-        }
+        // //发射炮弹
+        // if (Input.GetKey (KeyCode.Q)) {
+        //     if (Current_MP >= 10) {
+        //         btn1.transform.DOScale (new Vector3 (1.5f, 1.5f, 1.5f), 0.1f);
+        //         shotCD -= Time.deltaTime;
+        //         shot ();
+        //     }
+        // }
 
-        if (Input.GetKeyUp (KeyCode.Q)) {
-            btn1.transform.DOScale (new Vector3 (1, 1, 1), 0.1f);
-        }
+        // if (Input.GetKeyUp (KeyCode.Q)) {
+        //     btn1.transform.DOScale (new Vector3 (1, 1, 1), 0.1f);
+        // }
 
-        if (Input.GetKey (KeyCode.W)) {
-            if (Current_MP >= 0.3 * Max_MP) {
-                Range_energy.SetActive (true);
-                btn2.transform.DOScale (new Vector3 (1.5f, 1.5f, 1.5f), 0.1f);
 
-            }
-            if (Current_MP <= 0.1 * Max_MP) {
-                Range_energy.SetActive (false);
-            } else {
-                Current_MP = Mathf.Max (Current_MP - 1, 0);
-            }
-        }
-
-        if (Input.GetKeyUp (KeyCode.W)) {
-            Range_energy.SetActive (false);
-            btn2.transform.DOScale (new Vector3 (1, 1, 1), 0.1f);
-        }
+       
 
         if (Input.GetKey (KeyCode.E)) {
             if (skillFinished == true) {
@@ -147,7 +143,7 @@ public class PlayerControl : MonoBehaviour {
 
         if (Current_HP <= 0) {
             //progressBarMP.size = 0;
-            GameObject.Find("Main Camera").GetComponent<GameControl>().GameOver();
+            GameObject.Find ("Main Camera").GetComponent<GameControl> ().GameOver ();
             //new GameControl().GameOver ();
             //Destroy(gameObject);
         }
@@ -155,23 +151,23 @@ public class PlayerControl : MonoBehaviour {
 
     }
 
-    void shot () {
-        //CD结束发送炮弹
-        if (shotCD <= 0) {
-            Instantiate (bullet, shotPointMiddle.transform.position, Quaternion.Euler (new Vector3 (0, 0, 0)));
-            Instantiate (bullet, shotPointLeft.transform.position, Quaternion.Euler (new Vector3 (0, 0, 60)));
-            Instantiate (bullet, shotPointRight.transform.position, Quaternion.Euler (new Vector3 (0, 0, -60)));
+    // void shot () {
+    //     //CD结束发送炮弹
+    //     if (shotCD <= 0) {
+    //         Instantiate (bullet, shotPointMiddle.transform.position, Quaternion.Euler (new Vector3 (0, 0, 0)));
+    //         Instantiate (bullet, shotPointLeft.transform.position, Quaternion.Euler (new Vector3 (0, 0, 60)));
+    //         Instantiate (bullet, shotPointRight.transform.position, Quaternion.Euler (new Vector3 (0, 0, -60)));
 
-            Instantiate (bullet, shotPointMiddle_down.transform.position, Quaternion.Euler (new Vector3 (-180, 0, 0)));
-            Instantiate (bullet, shotPointRight_down.transform.position, Quaternion.Euler (new Vector3 (-180, 0, -60)));
-            Instantiate (bullet, shotPointLeft_down.transform.position, Quaternion.Euler (new Vector3 (-180, 0, 60)));
-            Current_MP = Current_MP - 5;
-            //Instantiate(bullet, shotPoint.transform.position, new Vector3(0, 0, 0));
-            //audio.Play();
-            //重置CD
-            shotCD = CD;
-        }
-    }
+    //         Instantiate (bullet, shotPointMiddle_down.transform.position, Quaternion.Euler (new Vector3 (-180, 0, 0)));
+    //         Instantiate (bullet, shotPointRight_down.transform.position, Quaternion.Euler (new Vector3 (-180, 0, -60)));
+    //         Instantiate (bullet, shotPointLeft_down.transform.position, Quaternion.Euler (new Vector3 (-180, 0, 60)));
+    //         Current_MP = Current_MP - 5;
+    //         //Instantiate(bullet, shotPoint.transform.position, new Vector3(0, 0, 0));
+    //         //audio.Play();
+    //         //重置CD
+    //         shotCD = CD;
+    //     }
+    // }
     void blink () {
         // SpriteRenderer spr = gameObject.GetComponent<SpriteRenderer>();  
         //   Texture2D texture2d = (Texture2D)Resources.Load("/Pic/circle");//更换为红色主题英雄角色图片  
@@ -261,5 +257,8 @@ public class PlayerControl : MonoBehaviour {
         //.From();
     }
 
-    
+    public List<SkillData> GetSkillList(){
+        return PlayerSkillList;
+    }
+
 }
