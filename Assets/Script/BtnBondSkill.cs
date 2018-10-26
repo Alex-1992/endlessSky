@@ -6,7 +6,7 @@ using UnityEngine.UI;
 //using UnityEngine.Sprite;
 //[System.Serializable]
 
-public class Btn1BondSkill : MonoBehaviour {
+public class BtnBondSkill : MonoBehaviour {
     public GameObject panel;
     public Image imageFilled;
     public Image imageBack;
@@ -26,8 +26,8 @@ public class Btn1BondSkill : MonoBehaviour {
         Type t = Type.GetType (currentSkillName);
         //AddComponent<ttt> ();
         gameObject.AddComponent (t);
-        gameObject.SendMessage ("SetImg", imageFilled);
-        gameObject.SendMessage ("SetKeyCode", skillKey);
+        gameObject.SendMessage ("SetImg", imageFilled, SendMessageOptions.RequireReceiver);
+        gameObject.SendMessage ("SetKeyCode", skillKey, SendMessageOptions.RequireReceiver);
         Debug.Log ("31" + gameObject);
         //gameObject.GetComponent<currentSkillName>().SetImg (imageFilled);
         //.GetComponent<脚本名>().函数名();//只能调用public类型函数
@@ -85,8 +85,8 @@ public class Btn1BondSkill : MonoBehaviour {
 
         //3.绑定img和keycode。
 
-        gameObject.SendMessage ("SetImg", imageFilled);
-        gameObject.SendMessage ("SetKeyCode", skillKey);
+        gameObject.SendMessage ("SetImg", imageFilled, SendMessageOptions.RequireReceiver);
+        gameObject.SendMessage ("SetKeyCode", skillKey, SendMessageOptions.RequireReceiver);
         Debug.Log ("78" + gameObject);
 
         //4.更换当前按钮技能icon
