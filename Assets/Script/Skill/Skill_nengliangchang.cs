@@ -31,6 +31,7 @@ public class Skill_nengliangchang : MonoBehaviour {
     void Update () {
         if (Input.GetKey (skillKey)) {
             if (PlayerControl.Current_MP >= 0.3 * PlayerControl.Max_MP) {
+                imageFilled.fillAmount = 1;
                 Range_energy.SetActive (true);
                 //btn2.transform.DOScale (new Vector3 (1.5f, 1.5f, 1.5f), 0.1f);
 
@@ -44,6 +45,7 @@ public class Skill_nengliangchang : MonoBehaviour {
 
         if (Input.GetKeyUp (skillKey)) {
             Range_energy.SetActive (false);
+            imageFilled.fillAmount = 0;
             //btn2.transform.DOScale (new Vector3 (1, 1, 1), 0.1f);
         }
     }
