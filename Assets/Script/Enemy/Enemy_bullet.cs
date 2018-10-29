@@ -38,7 +38,7 @@ public class Enemy_bullet : MonoBehaviour {
             PlayerControl.Current_HP -= Damage;
             Destroy(this.gameObject);
             //GameControl.ShakeScreen(0.1f);
-            PlayerControl.Hitted();
+            PlayerControl.SufferDamage(Damage);
 
         }
     }

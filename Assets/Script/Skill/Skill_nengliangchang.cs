@@ -10,7 +10,10 @@ public class Skill_nengliangchang : MonoBehaviour {
 
     private float coldTime = 0; //技能的冷却时间    
     private float timer = 0; //当前冷却时间    
-    private bool isCold = false; //是否进入冷却    
+    private bool isCold = false; //是否进入冷却
+    private float mpCost = 1;
+    public static int SkillLevel = 1;
+    public static float SkillDamagePercent = 0.2f;
 
     private GameObject player;
     private GameObject Range_energy;
@@ -39,7 +42,7 @@ public class Skill_nengliangchang : MonoBehaviour {
             if (PlayerControl.Current_MP <= 0.1 * PlayerControl.Max_MP) {
                 Range_energy.SetActive (false);
             } else {
-                PlayerControl.Current_MP = Mathf.Max (PlayerControl.Current_MP - 1, 0);
+                PlayerControl.Current_MP = Mathf.Max (PlayerControl.Current_MP - mpCost, 0);
             }
         }
 
@@ -58,4 +61,11 @@ public class Skill_nengliangchang : MonoBehaviour {
         skillKey = k;
     }
 
+    public void SetSkillLevel (int num) {
+        SkillLevel = num;
+    }
+
+    public static float getSkillDamage () {
+        return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float) (SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2);
+    }
 }

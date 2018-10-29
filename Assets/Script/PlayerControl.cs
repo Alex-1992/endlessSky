@@ -20,26 +20,26 @@ public class PlayerControl : MonoBehaviour {
     public static float Current_MP = 200;
     public static float MP_Recover_Persecond = 20;
     public static float Def = 0;
+    public static bool WUDI = false;
+    public static bool IsBlinkFinished = true;
 
     public static float variable_Attack = 1;
+
     public static float variable_Bullet = 1;
     public static float variable_Range = 1;
-    public static float variable_Auto = 1;
-    public static float variable_Hand = 1;
     public static float variable_Single = 1;
     public static float variable_Continue = 1;
 
-    public static bool skillFinished = true;
     public static Vector3 playerPosition;
 
-    public Button btn1;
-    public Button btn2;
-    public Button btn3;
+    // public Button btn1;
+    // public Button btn2;
+    // public Button btn3;
 
-    public GameObject EnemyPool;
+    //public GameObject EnemyPool;
     public Scrollbar progressBarHP;
     public Scrollbar progressBarMP;
-    public GameObject Range_energy;
+    //public GameObject Range_energy;
     // //子弹发射点
     // public GameObject shotPointMiddle;
     // public GameObject shotPointLeft;
@@ -48,8 +48,6 @@ public class PlayerControl : MonoBehaviour {
     // public GameObject shotPointLeft_down;
     // public GameObject shotPointRight_down;
 
-    public Sprite CircleSprite;
-    public Sprite OriginSprite;
     // //玩家发射子弹CD
     // private float shotCD = 0;
     // public float CD = 0.3f;
@@ -60,7 +58,7 @@ public class PlayerControl : MonoBehaviour {
     public AudioSource audio;
 
     public List<SkillData> skillList = new List<SkillData> ();
-    public List<SkillData> PlayerSkillList;
+    public List<SkillData> playerSkillList;
 
     // Use this for initialization
     void Start () {
@@ -70,10 +68,10 @@ public class PlayerControl : MonoBehaviour {
         string skillInfo = File.ReadAllText ("Assets/Json/Skill.json", Encoding.UTF8);
         skillList = JsonMapper.ToObject<List<SkillData>> (skillInfo);
 
-        PlayerSkillList = new List<SkillData> (skillList);
-        Debug.Log (PlayerSkillList[0].describe);
-        Debug.Log (PlayerSkillList[1].describe);
-        Debug.Log (PlayerSkillList[2].describe);
+        playerSkillList = new List<SkillData> (skillList);
+        Debug.Log (playerSkillList[0].describe);
+        Debug.Log (playerSkillList[1].describe);
+        Debug.Log (playerSkillList[2].describe);
     }
 
     // Update is called once per frame
@@ -98,39 +96,6 @@ public class PlayerControl : MonoBehaviour {
             transform.Translate (Vector3.right * Time.deltaTime * speed);
         }
 
-        // //发射炮弹
-        // if (Input.GetKey (KeyCode.Q)) {
-        //     if (Current_MP >= 10) {
-        //         btn1.transform.DOScale (new Vector3 (1.5f, 1.5f, 1.5f), 0.1f);
-        //         shotCD -= Time.deltaTime;
-        //         shot ();
-        //     }
-        // }
-
-        // if (Input.GetKeyUp (KeyCode.Q)) {
-        //     btn1.transform.DOScale (new Vector3 (1, 1, 1), 0.1f);
-        // }
-
-
-       
-
-        if (Input.GetKey (KeyCode.E)) {
-            if (skillFinished == true) {
-                if (Current_MP >= 40) {
-                    Current_MP = Current_MP - 40;
-
-                    blink ();
-                }
-
-            }
-
-        }
-        // if (Input.GetKey(KeyCode.Q))
-        // {
-        //     Debug.Log("qqqqqqqqqq");
-
-        // }
-
         if (Current_HP < Max_HP) {
             Current_HP = Current_HP + HP_Recover_Persecond / 30;
             progressBarHP.size = Current_HP / Max_HP;
@@ -151,105 +116,10 @@ public class PlayerControl : MonoBehaviour {
 
     }
 
-    // void shot () {
-    //     //CD结束发送炮弹
-    //     if (shotCD <= 0) {
-    //         Instantiate (bullet, shotPointMiddle.transform.position, Quaternion.Euler (new Vector3 (0, 0, 0)));
-    //         Instantiate (bullet, shotPointLeft.transform.position, Quaternion.Euler (new Vector3 (0, 0, 60)));
-    //         Instantiate (bullet, shotPointRight.transform.position, Quaternion.Euler (new Vector3 (0, 0, -60)));
+    public static void SufferDamage (float damage) {
 
-    //         Instantiate (bullet, shotPointMiddle_down.transform.position, Quaternion.Euler (new Vector3 (-180, 0, 0)));
-    //         Instantiate (bullet, shotPointRight_down.transform.position, Quaternion.Euler (new Vector3 (-180, 0, -60)));
-    //         Instantiate (bullet, shotPointLeft_down.transform.position, Quaternion.Euler (new Vector3 (-180, 0, 60)));
-    //         Current_MP = Current_MP - 5;
-    //         //Instantiate(bullet, shotPoint.transform.position, new Vector3(0, 0, 0));
-    //         //audio.Play();
-    //         //重置CD
-    //         shotCD = CD;
-    //     }
-    // }
-    void blink () {
-        // SpriteRenderer spr = gameObject.GetComponent<SpriteRenderer>();  
-        //   Texture2D texture2d = (Texture2D)Resources.Load("/Pic/circle");//更换为红色主题英雄角色图片  
-        //   Sprite sp = Sprite.Create(texture2d,spr.sprite.textureRect,new Vector2(0.5f,0.5f));//注意居中显示采用0.5f值  
-        //   spr.sprite = sp;  
-        btn3.transform.localScale = new Vector3 (1.5f, 1.5f, 1.5f);
-        ((SpriteRenderer) gameObject.GetComponent<Renderer> ()).sprite = CircleSprite;
-
-        //Sequence s1 = DOTween.Sequence ();
-        btn3.interactable = false;
-        Vector3 originPos = new Vector3 (0, 0, 0);
-        originPos = gameObject.transform.position;
-        //s1.Append (btn3.transform.DOScale (new Vector3 (1.5f, 1.5f, 1.5f), 0.1f)).Append (btn3.transform.DOScale (new Vector3 (1, 1, 1), 0.1f));
-        //btn3.transform.DOScale(new Vector3(2, 2, 2), 0.1f);
-        //btn3.transform.DOScale(new Vector3(1, 1, 1), 0.1f);
-        float temp = HP_Recover_Persecond;
-        HP_Recover_Persecond = 50000;
-        skillFinished = false;
-        //int i = 0;
-        //List<Vector3> positionList = new List<Vector3> ();
-        // List<T> mList = new List<T>();  
-        GameControl.enemyCanMove = false;
-        Sequence s = DOTween.Sequence ();
-        foreach (Transform child in EnemyPool.transform) {
-            if (!child) {
-                break;
-            }
-            //child.gameObject.GetComponent<EnemyControl> ().CanMove = false;
-            //positionList.Add (child.position);
-            s.Append (transform.DOMove (child.position, 0.1f));
-            // Debug.Log(child.position + "I:" + i);
-            // Debug.Log(positionList[i] + "I:" + i);
-            //i++;
-
-        }
-
-        // foreach (Vector3 v in positionList) {
-        //     s.Append (transform.DOMove (v, 0.1f));
-        // }
-        s.Append (transform.DOMove (originPos, 0.1f));
-        s.OnComplete (skillStatusChange);
-    }
-    void skillStatusChange () {
-        btn3.transform.localScale = new Vector3 (1, 1, 1);
-        GameControl.enemyCanMove = true;
-        btn3.interactable = true;
-        HP_Recover_Persecond = 50;
-        skillFinished = true;
-        ((SpriteRenderer) gameObject.GetComponent<Renderer> ()).sprite = OriginSprite;
-
-        //Current_HP = 0.1f * Max_HP;
-    }
-
-    // void OnTriggerEnter (Collider obj) {
-    //     //Debug.Log(obj.gameObject.GetComponent<EnemyControl>().HP);
-    //     float enemyHP = obj.gameObject.GetComponent<EnemyControl> ().HP;
-    //     Debug.Log(skillFinished);
-    //     if (skillFinished == false) {
-    //         Debug.Log("killFinished == false");
-    //         Debug.Log(enemyHP);
-    //         enemyHP = enemyHP - AttackNum * 5;
-    //         Debug.Log(enemyHP);
-    //         if(enemyHP <=0){
-    //             Destroy(obj.gameObject);
-    //         }
-    //     } else if (Current_HP > enemyHP) {
-    //         Current_HP = Current_HP - enemyHP;
-    //         progressBarHP.size = Current_HP / Max_HP;
-    //         Destroy (obj.gameObject);
-    //     } else {
-    //         //玩家挂了 游戏结束
-    //         Debug.Log ("1111111111111111");
-    //         //GameOverText.SetActive(true);
-    //         progressBarHP.size = 0;
-    //         GameOverText.text = "GAME OVER";
-    //         Destroy (gameObject);
-    //     }
-    // }
-
-    public static void Hitted () {
-
-        if (skillFinished == true) {
+        if (WUDI == false) {
+            Current_HP -= damage;
             Sequence s = DOTween.Sequence ();
             s.Append (spr.DOColor (Color.red, 0.05f)).Append (spr.DOColor (Color.white, 0.05f));
         }
@@ -257,8 +127,38 @@ public class PlayerControl : MonoBehaviour {
         //.From();
     }
 
-    public List<SkillData> GetSkillList(){
-        return PlayerSkillList;
+    public List<SkillData> GetSkillList () {
+        return playerSkillList;
     }
 
+    private SkillData FetchSkillByName (string name) {
+        foreach (SkillData s in playerSkillList) {
+
+            if (s.name == name) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    void OnTriggerEnter (Collider obj) {
+        //Debug.Log(obj.gameObject.GetComponent<EnemyControl>().HP);
+        if (obj.gameObject.name == "DropItem" || obj.gameObject.name == "DropItem(Clone)") {
+            if (obj.gameObject.GetComponent<DropItem> ().Type == "skill") {
+                Debug.Log ("捡到宝了！");
+                //Debug.Log (obj.gameObject.GetComponent<DropItem> ().SkillName);
+                //Debug.Log (FetchSkillByName (obj.gameObject.GetComponent<DropItem> ().SkillName));
+                SkillData skillInBag = FetchSkillByName (obj.gameObject.GetComponent<DropItem> ().SkillName);
+                if (skillInBag != null) {
+                    //表示已有该技能,比较等级自动升级
+                    if (obj.gameObject.GetComponent<DropItem> ().SkillLevel > int.Parse (skillInBag.level)) {
+                        //表示掉落技能等级比已有技能等级高
+                        //问题 怎么根据脚本名字改变对应技能脚本里的level(没挂载在object上)
+                    }
+                } else {
+                    //表示没有该技能
+                }
+            }
+        }
+    }
 }

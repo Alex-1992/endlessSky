@@ -22,7 +22,7 @@ public class Enemy1 : MonoBehaviour {
 	// Use this for initialization
 
 	void Start () {
-		blink();
+		blink ();
 	}
 
 	// Update is called once per frame
@@ -64,7 +64,8 @@ public class Enemy1 : MonoBehaviour {
 		// Quaternion TargetRotation = Quaternion.LookRotation(m_Target.transform.position - transform.position, Vector3.up);
 		// transform.rotation = Quaternion.Slerp(transform.rotation, TargetRotation, Time.deltaTime * 2.5f);
 		//始终面向玩家
-		if (PlayerControl.skillFinished == true) {
+		//Debug.Log(PlayerControl.IsBlinkFinished == true);
+		if (PlayerControl.IsBlinkFinished == true) {
 			gameObject.transform.Rotate (new Vector3 (180, 0, 0));
 			Vector3 targetPosition = PlayerControl.playerPosition;
 			targetPosition.z = transform.position.z;
@@ -82,16 +83,17 @@ public class Enemy1 : MonoBehaviour {
 		//Debug.Log(obj.gameObject.name);
 		if (obj.gameObject.name == "Player_bullet(Clone)") {
 			//计算击中伤害 攻击-弹道-自施放-单次伤害
-			damage = PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Auto * PlayerControl.variable_Single;
+			damage = Skill_jianzaihuopao.getSkillDamage ();
 			HP = HP - damage;
 			//销毁子弹
 			Destroy (obj.gameObject);
 		} else if (obj.gameObject.name == "player") {
-			if (PlayerControl.skillFinished == false) {
-				HP = HP - PlayerControl.AttackNum * 3;
+			if (PlayerControl.IsBlinkFinished == false) {
+				HP = HP - Skill_shanxiandaji.getSkillDamage ();
 			} else if (HP < PlayerControl.Current_HP) {
 				//表示player与敌人撞击 并且敌人死亡
-				PlayerControl.Current_HP -= HP;
+				//PlayerControl.Current_HP -= HP;
+				PlayerControl.SufferDamage (HP);
 				HP = 0;
 			} else {
 				//玩家死亡
@@ -121,7 +123,7 @@ public class Enemy1 : MonoBehaviour {
 	void OnTriggerStay (Collider obj) {
 		//Debug.Log("stay range_energy");
 		if (obj.gameObject.name == "range_energy") {
-			HP = HP - 10;
+			HP = HP - Skill_nengliangchang.getSkillDamage ();
 			if (HP <= 0) {
 				//Destroy(obj.gameObject);
 				//敌机死亡
@@ -134,19 +136,20 @@ public class Enemy1 : MonoBehaviour {
 
 	}
 
-	private void OnDestroy () {
-		//boom.Play();
-		Instantiate (boom, gameObject.transform.position, Quaternion.Euler (new Vector3 (0, 0, 0)));
-		//Debug.Log("aaaaaa");
-	}
 	private void blink () {
 		Sequence s = DOTween.Sequence ();
 		//gameObject.GetComponent<SpriteRenderer>().DOFade(0.2, 1); 
 		s.Append (gameObject.GetComponent<SpriteRenderer> ().DOFade (0.2f, 1))
 			.Append (transform.DOMove (new Vector3 (Random.Range (-2f, 2f), Random.Range (-3f, 4f), 0), 1f))
 			.Append (gameObject.GetComponent<SpriteRenderer> ().DOFade (1, 1))
-			.Append (transform.DOMove (PlayerControl.playerPosition*Random.Range(0.2f,1f), 1f)).onComplete = delegate() {
-			blink();
-		};
+			.Append (transform.DOMove (PlayerControl.playerPosition * Random.Range (0.2f, 1f), 1f)).onComplete = delegate () {
+				blink ();
+			};
+	}
+	private void OnDestroy () {
+		//boom.Play();
+		Instantiate (boom, gameObject.transform.position, Quaternion.Euler (new Vector3 (0, 0, 0)));
+		GameObject.Find ("Main Camera").GetComponent<GameControl> ().CountIfDropItem (transform.position);
+		//Debug.Log("aaaaaa");
 	}
 }

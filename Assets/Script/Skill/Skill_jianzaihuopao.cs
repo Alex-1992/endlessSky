@@ -10,7 +10,10 @@ public class Skill_jianzaihuopao : MonoBehaviour {
 
 	private float coldTime = 0.2f; //技能的冷却时间    
 	private float timer = 0; //当前冷却时间    
-	private bool isCold = false; //是否进入冷却    
+	private bool isCold = false; //是否进入冷却  
+	private float mpCost = 5;
+	public static int SkillLevel = 1;
+	public static float SkillDamagePercent = 1;
 	//public GameObject player;
 
 	//子弹发射点
@@ -70,6 +73,7 @@ public class Skill_jianzaihuopao : MonoBehaviour {
 		//imageFilled.fillAmount = 0;
 		if (Input.GetKey (skillKey) && isCold == false) {
 			shot ();
+			PlayerControl.Current_MP = PlayerControl.Current_MP - mpCost;
 			isCold = true;
 			//Debug.Log(isCold);
 		}
@@ -89,7 +93,6 @@ public class Skill_jianzaihuopao : MonoBehaviour {
 		Instantiate (bullet, shotPointRight_down.transform.position, Quaternion.Euler (new Vector3 (-180, 0, -60)));
 		Instantiate (bullet, shotPointLeft_down.transform.position, Quaternion.Euler (new Vector3 (-180, 0, 60)));
 
-		PlayerControl.Current_MP = PlayerControl.Current_MP - 5;
 		//audio.Play();
 
 	}
@@ -100,5 +103,13 @@ public class Skill_jianzaihuopao : MonoBehaviour {
 
 	public void SetKeyCode (KeyCode k) {
 		skillKey = k;
+	}
+
+	public void SetSkillLevel (int num) {
+		SkillLevel = num;
+	}
+	
+	public static float getSkillDamage () {
+		return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float) (SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2);
 	}
 }

@@ -85,7 +85,7 @@ public class EnemyControl : MonoBehaviour
         if (obj.gameObject.name == "Player_bullet(Clone)")
         {
             //计算击中伤害 攻击-弹道-自施放-单次伤害
-            damage = PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Auto * PlayerControl.variable_Single;
+           damage = Skill_jianzaihuopao.getSkillDamage();
             HP = HP - damage;
             Debug.Log(" 1 11 1 1 11111111111111111111111111111111111111");
             //销毁子弹
@@ -93,7 +93,7 @@ public class EnemyControl : MonoBehaviour
         }
         else if (obj.gameObject.name == "player")
         {
-            if (PlayerControl.skillFinished == false)
+            if (PlayerControl.IsBlinkFinished == false)
             {
                 HP = HP - PlayerControl.AttackNum * 3;
             }

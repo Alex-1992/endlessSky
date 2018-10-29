@@ -26,13 +26,13 @@
 		"id": "3",
 		"name": "闪现冲撞",
 		"describe": "撞撞撞",
-		"img": "shanxianchongzhuang",
+		"img": "shanxiandaji",
 		"type": "攻击-范围-单次",
 		"damage_factor": "2",
 		"level": "1",
 		"cd": "2",
 		"mp_cost": "60",
-		"script": "Skill_shanxianchongzhuang"
+		"script": "Skill_shanxiandaji"
 	}
 
 ]

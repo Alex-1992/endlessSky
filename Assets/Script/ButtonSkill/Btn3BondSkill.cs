@@ -6,15 +6,15 @@ using UnityEngine.UI;
 //using UnityEngine.Sprite;
 //[System.Serializable]
 
-public class Btn1BondSkill : MonoBehaviour {
+public class Btn3BondSkill : MonoBehaviour {
     public GameObject panel;
     public Image imageFilled;
     public Image imageBack;
     //public Image imageFilled;
 
-    public KeyCode skillKey = KeyCode.Q;
+    public KeyCode skillKey = KeyCode.E;
     private bool IsSkillShowed = false;
-    private string currentSkillName = "";
+    public string currentSkillName = "";
     //private Sprite SkillIcon;
     private List<SkillData> SkillList = new List<SkillData> ();
     // Use this for initialization
@@ -22,17 +22,25 @@ public class Btn1BondSkill : MonoBehaviour {
         //1.删除之前的技能脚本。  
         //2.在该按钮挂在对应技能脚本名字写入currentSkillName。 
         //3.绑定img和keycode。
-        currentSkillName = "Skill_jianzaihuopao";
+        currentSkillName = "Skill_shanxiandaji";
         Type t = Type.GetType (currentSkillName);
         //AddComponent<ttt> ();
         gameObject.AddComponent (t);
-        gameObject.SendMessage ("SetImg", imageFilled);
-        gameObject.SendMessage ("SetKeyCode", skillKey);
-        Debug.Log ("31" + gameObject);
+        gameObject.SendMessage ("SetImg", imageFilled, SendMessageOptions.RequireReceiver);
+        gameObject.SendMessage ("SetKeyCode", skillKey, SendMessageOptions.RequireReceiver);
+
+        imageFilled.sprite = Instantiate (Resources.Load<Sprite> ("Pic/skill/" + currentSkillName.Substring(6)));
+        //Debug.Log("Pic/skill/" + currentSkillName.Substring(6));
+        imageBack.sprite = Instantiate (Resources.Load<Sprite> ("Pic/skill/" + currentSkillName.Substring(6)));
+
+        //Debug.Log ("31" + gameObject);
         //gameObject.GetComponent<currentSkillName>().SetImg (imageFilled);
         //.GetComponent<脚本名>().函数名();//只能调用public类型函数
         // gameObject.GetComponent (currentSkillName).SetKeyCode (skillKey);
         //.GetComponent<EnemyControl>().HP
+        gameObject.GetComponent<Button> ().onClick.AddListener (delegate () {
+            OnClick ();
+        });
     }
 
     // Update is called once per frame
@@ -85,8 +93,8 @@ public class Btn1BondSkill : MonoBehaviour {
 
         //3.绑定img和keycode。
 
-        gameObject.SendMessage ("SetImg", imageFilled);
-        gameObject.SendMessage ("SetKeyCode", skillKey);
+        gameObject.SendMessage ("SetImg", imageFilled, SendMessageOptions.RequireReceiver);
+        gameObject.SendMessage ("SetKeyCode", skillKey, SendMessageOptions.RequireReceiver);
         Debug.Log ("78" + gameObject);
 
         //4.更换当前按钮技能icon

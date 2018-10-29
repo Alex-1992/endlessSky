@@ -66,7 +66,8 @@ public class Enemy0 : MonoBehaviour {
 
 		// Quaternion TargetRotation = Quaternion.LookRotation(m_Target.transform.position - transform.position, Vector3.up);
 		// transform.rotation = Quaternion.Slerp(transform.rotation, TargetRotation, Time.deltaTime * 2.5f);
-		if (PlayerControl.skillFinished == true) {
+
+		if (PlayerControl.IsBlinkFinished == true) {
 			gameObject.transform.Rotate (new Vector3 (180, 0, 0));
 			Vector3 targetPosition = PlayerControl.playerPosition;
 			targetPosition.z = transform.position.z;
@@ -92,20 +93,21 @@ public class Enemy0 : MonoBehaviour {
 		//Debug.Log(obj.gameObject.name);
 		if (obj.gameObject.name == "Player_bullet(Clone)") {
 			//计算击中伤害 攻击-弹道-自施放-单次伤害
-			damage = PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Auto * PlayerControl.variable_Single;
+			damage = Skill_jianzaihuopao.getSkillDamage();
 			HP = HP - damage;
 			//销毁子弹
 			Destroy (obj.gameObject);
 		} else if (obj.gameObject.name == "player") {
-			if (PlayerControl.skillFinished == false) {
-				HP = HP - PlayerControl.AttackNum * 2;
+			if (PlayerControl.IsBlinkFinished == false) {
+				HP = HP - Skill_shanxiandaji.getSkillDamage();
 			} else if (HP < PlayerControl.Current_HP) {
 				//表示player与敌人撞击 并且敌人死亡
-				PlayerControl.Current_HP -= HP;
+				PlayerControl.SufferDamage(HP);
+				//PlayerControl.Current_HP -= HP;
 				HP = 0;
 			} else {
 				//玩家死亡
-				PlayerControl.Current_HP = 0;
+				PlayerControl.Current_HP = -1000;
 			}
 			//damage = PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Auto * PlayerControl.variable_Single;
 			//Debug.Log("enter range_energy");
@@ -131,7 +133,7 @@ public class Enemy0 : MonoBehaviour {
 	void OnTriggerStay (Collider obj) {
 		//Debug.Log("stay range_energy");
 		if (obj.gameObject.name == "range_energy") {
-			HP = HP - 10;
+			HP = HP - Skill_nengliangchang.getSkillDamage();
 			if (HP <= 0) {
 				//Destroy(obj.gameObject);
 				//敌机死亡
@@ -147,6 +149,7 @@ public class Enemy0 : MonoBehaviour {
 	private void OnDestroy () {
 		//boom.Play();
 		Instantiate (boom, gameObject.transform.position, Quaternion.Euler (new Vector3 (0, 0, 0)));
+		GameObject.Find ("Main Camera").GetComponent<GameControl> ().CountIfDropItem(transform.position);
 		//Debug.Log("aaaaaa");
 	}
 }
