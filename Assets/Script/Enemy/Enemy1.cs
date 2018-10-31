@@ -83,13 +83,13 @@ public class Enemy1 : MonoBehaviour {
 		//Debug.Log(obj.gameObject.name);
 		if (obj.gameObject.name == "Player_bullet(Clone)") {
 			//计算击中伤害 攻击-弹道-自施放-单次伤害
-			damage = Skill_jianzaihuopao.getSkillDamage ();
+			damage = new Skill_jianzaihuopao().getSkillDamage ();
 			HP = HP - damage;
 			//销毁子弹
 			Destroy (obj.gameObject);
 		} else if (obj.gameObject.name == "player") {
 			if (PlayerControl.IsBlinkFinished == false) {
-				HP = HP - Skill_shanxiandaji.getSkillDamage ();
+				HP = HP - new Skill_shanxiandaji().getSkillDamage ();
 			} else if (HP < PlayerControl.Current_HP) {
 				//表示player与敌人撞击 并且敌人死亡
 				//PlayerControl.Current_HP -= HP;
@@ -123,7 +123,7 @@ public class Enemy1 : MonoBehaviour {
 	void OnTriggerStay (Collider obj) {
 		//Debug.Log("stay range_energy");
 		if (obj.gameObject.name == "range_energy") {
-			HP = HP - Skill_nengliangchang.getSkillDamage ();
+			HP = HP - new Skill_nengliangchang().getSkillDamage ();
 			if (HP <= 0) {
 				//Destroy(obj.gameObject);
 				//敌机死亡

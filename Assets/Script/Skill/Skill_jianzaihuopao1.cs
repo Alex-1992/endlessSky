@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Skill_jianzaihuopao : SkillBase {
+public class Skill_jianzaihuopao1 : MonoBehaviour {
 
-	// public Image imageFilled; //填充背景，及灰色读条
-	// public KeyCode skillKey; //对应技能按键
-	// public static GameObject currentBtn;//当前绑定的按钮
-	// public Text LevelText;
+	public Image imageFilled; //填充背景，及灰色读条
+	public KeyCode skillKey; //对应技能按键
+	public static GameObject currentBtn;//当前绑定的按钮
 
 	private float coldTime = 0.2f; //技能的冷却时间    
 	private float timer = 0; //当前冷却时间    
 	private bool isCold = false; //是否进入冷却  
 	private float mpCost = 5;
-	//public static int SkillLevel = 1;
+	public static int SkillLevel = 1;
 	public static float SkillDamagePercent = 1;
-	
+	public Text LevelText;
 	//public GameObject player;
 
 	//子弹发射点
@@ -29,14 +28,11 @@ public class Skill_jianzaihuopao : SkillBase {
 
 	GameObject bullet;
 
-	public Skill_jianzaihuopao(){
-		
-	}
 	// Use this for initialization
 	void Start () {
 
 
-		//imageFilled.fillAmount = 0;
+		imageFilled.fillAmount = 0;
 		shotPointMiddle = GameObject.Find ("player/shotPointMiddle");
 		shotPointLeft = GameObject.Find ("player/shotPointLeft");
 		shotPointRight = GameObject.Find ("player/shotPointRight");
@@ -79,7 +75,7 @@ public class Skill_jianzaihuopao : SkillBase {
 	private void SkillKeyDown () {
 		//imageFilled.fillAmount = 0;
 		if (Input.GetKey (skillKey) && isCold == false) {
-			PlaySkill ();
+			shot ();
 			PlayerControl.Current_MP = PlayerControl.Current_MP - mpCost;
 			isCold = true;
 			//Debug.Log(isCold);
@@ -87,7 +83,7 @@ public class Skill_jianzaihuopao : SkillBase {
 	}
 
 	//技能释放
-	void PlaySkill () {
+	void shot () {
 
 		// Debug.Log (shotPointLeft_down);
 		// Debug.Log (shotPointLeft_down.transform.position);
@@ -104,30 +100,30 @@ public class Skill_jianzaihuopao : SkillBase {
 
 	}
 
-	// public void SetImg (Image img) {
-	// 	imageFilled = img;
-	// }
+	public void SetImg (Image img) {
+		imageFilled = img;
+	}
 
-	// public void SetKeyCode (KeyCode k) {
-	// 	skillKey = k;
-	// }
+	public void SetKeyCode (KeyCode k) {
+		skillKey = k;
+	}
 
-	// public void SetCurrentBtn (GameObject obj) {
-	// 	Debug.Log("SetCurrentBtn" + obj);
-	// 	currentBtn = obj;
-	// }
+	public void SetCurrentBtn (GameObject obj) {
+		Debug.Log("SetCurrentBtn" + obj);
+		currentBtn = obj;
+	}
 
-	// public void SetSkillLevel (int num) {
-	// 	SkillLevel = num;
+	public void SetSkillLevel (int num) {
+		SkillLevel = num;
 
-	// 	//Debug.Log(gameObject);
-	// 	Debug.Log(currentBtn);
-	// 	Debug.Log(currentBtn.transform.Find("LevelText"));
-	// 	Debug.Log(currentBtn.transform.Find("LevelText").GetComponent<Text>().text);
-	// 	currentBtn.transform.Find("LevelText").GetComponent<Text>().text = "Lv"+ num;
-	// }
+		//Debug.Log(gameObject);
+		Debug.Log(currentBtn);
+		Debug.Log(currentBtn.transform.Find("LevelText"));
+		Debug.Log(currentBtn.transform.Find("LevelText").GetComponent<Text>().text);
+		currentBtn.transform.Find("LevelText").GetComponent<Text>().text = "Lv"+ num;
+	}
 
-	public float getSkillDamage () {
+	public static float getSkillDamage () {
 		Debug.Log( PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float) (SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2));
 		return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float) (SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2);
 		

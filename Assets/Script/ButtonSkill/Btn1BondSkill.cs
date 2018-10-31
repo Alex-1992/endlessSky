@@ -25,13 +25,15 @@ public class Btn1BondSkill : MonoBehaviour {
         currentSkillName = "Skill_jianzaihuopao";
         Type t = Type.GetType (currentSkillName);
         //AddComponent<ttt> ();
+        Debug.Log ("Btn1  "+gameObject);
         gameObject.AddComponent (t);
         gameObject.SendMessage ("SetImg", imageFilled, SendMessageOptions.RequireReceiver);
         gameObject.SendMessage ("SetKeyCode", skillKey, SendMessageOptions.RequireReceiver);
+        gameObject.SendMessage ("SetCurrentBtn", gameObject, SendMessageOptions.RequireReceiver);
 
         imageFilled.sprite = Instantiate (Resources.Load<Sprite> ("Pic/skill/" + currentSkillName.Substring (6)));
         imageBack.sprite = Instantiate (Resources.Load<Sprite> ("Pic/skill/" + currentSkillName.Substring (6)));
-        //Debug.Log ("31" + gameObject);
+        
         //gameObject.GetComponent<currentSkillName>().SetImg (imageFilled);
         //.GetComponent<脚本名>().函数名();//只能调用public类型函数
         // gameObject.GetComponent (currentSkillName).SetKeyCode (skillKey);

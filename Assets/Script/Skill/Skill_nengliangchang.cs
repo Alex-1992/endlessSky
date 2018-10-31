@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Skill_nengliangchang : MonoBehaviour {
+public class Skill_nengliangchang : SkillBase {
 
-    public Image imageFilled; //填充背景，及灰色读条
-    public KeyCode skillKey; //对应技能按键
+    // public Image imageFilled; //填充背景，及灰色读条
+    // public KeyCode skillKey; //对应技能按键
 
     private float coldTime = 0; //技能的冷却时间    
     private float timer = 0; //当前冷却时间    
     private bool isCold = false; //是否进入冷却
     private float mpCost = 1;
-    public static int SkillLevel = 1;
+    //public static int SkillLevel = 1;
     public static float SkillDamagePercent = 0.2f;
 
     private GameObject player;
@@ -26,8 +26,8 @@ public class Skill_nengliangchang : MonoBehaviour {
         // GameObject bbb = parentObj.transform.Find("BBB").gameObject;
         // bbb.SetActive(true);
 
-        Debug.Log ("Skill_nengliangchang" + player);
-        Debug.Log ("Skill_nengliangchang" + Range_energy);
+        //Debug.Log ("Skill_nengliangchang" + player);
+        //Debug.Log ("Skill_nengliangchang" + Range_energy);
     }
 
     // Update is called once per frame
@@ -53,19 +53,19 @@ public class Skill_nengliangchang : MonoBehaviour {
         }
     }
 
-    public void SetImg (Image img) {
-        imageFilled = img;
-    }
+    // public void SetImg (Image img) {
+    //     imageFilled = img;
+    // }
 
-    public void SetKeyCode (KeyCode k) {
-        skillKey = k;
-    }
+    // public void SetKeyCode (KeyCode k) {
+    //     skillKey = k;
+    // }
 
-    public void SetSkillLevel (int num) {
-        SkillLevel = num;
-    }
+    // public void SetSkillLevel (int num) {
+    //     SkillLevel = num;
+    // }
 
-    public static float getSkillDamage () {
+    public float getSkillDamage () {
         return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float) (SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2);
     }
 }

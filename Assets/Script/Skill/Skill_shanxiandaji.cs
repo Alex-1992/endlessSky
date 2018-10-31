@@ -4,16 +4,16 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Skill_shanxiandaji : MonoBehaviour {
+public class Skill_shanxiandaji : SkillBase {
 
-	public Image imageFilled; //填充背景，及灰色读条
-	public KeyCode skillKey; //对应技能按键
+	// public Image imageFilled; //填充背景，及灰色读条
+	// public KeyCode skillKey; //对应技能按键
 
 	private float coldTime = 2f; //技能的冷却时间    
 	private float timer = 0; //当前冷却时间    
 	private bool isCold = false; //是否进入冷却    
 	private float mpCost = 40;
-	public static int SkillLevel = 1; 
+	//public static int SkillLevel = 1; 
 	public static float SkillDamagePercent = 2; 
 	//public GameObject player;
 
@@ -128,19 +128,19 @@ public class Skill_shanxiandaji : MonoBehaviour {
 		//Current_HP = 0.1f * Max_HP;
 	}
 
-	public void SetImg (Image img) {
-		imageFilled = img;
-	}
+	// public void SetImg (Image img) {
+	// 	imageFilled = img;
+	// }
 
-	public void SetKeyCode (KeyCode k) {
-		skillKey = k;
-	}
+	// public void SetKeyCode (KeyCode k) {
+	// 	skillKey = k;
+	// }
 
-	public void SetSkillLevel(int num){
-		SkillLevel = num;
-	}
+	// public void SetSkillLevel(int num){
+	// 	SkillLevel = num;
+	// }
 
-	public static float getSkillDamage () {
+	public float getSkillDamage () {
 		return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float)(SkillDamagePercent + SkillDamagePercent * (SkillLevel -1) * 0.2);
 	}
 }

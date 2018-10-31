@@ -24,14 +24,16 @@ public class Btn3BondSkill : MonoBehaviour {
         //3.绑定img和keycode。
         currentSkillName = "Skill_shanxiandaji";
         Type t = Type.GetType (currentSkillName);
+        Debug.Log ("Btn3  "+gameObject);
         //AddComponent<ttt> ();
         gameObject.AddComponent (t);
         gameObject.SendMessage ("SetImg", imageFilled, SendMessageOptions.RequireReceiver);
         gameObject.SendMessage ("SetKeyCode", skillKey, SendMessageOptions.RequireReceiver);
+        gameObject.SendMessage ("SetCurrentBtn", gameObject, SendMessageOptions.RequireReceiver);
 
-        imageFilled.sprite = Instantiate (Resources.Load<Sprite> ("Pic/skill/" + currentSkillName.Substring(6)));
+        imageFilled.sprite = Instantiate (Resources.Load<Sprite> ("Pic/skill/" + currentSkillName.Substring (6)));
         //Debug.Log("Pic/skill/" + currentSkillName.Substring(6));
-        imageBack.sprite = Instantiate (Resources.Load<Sprite> ("Pic/skill/" + currentSkillName.Substring(6)));
+        imageBack.sprite = Instantiate (Resources.Load<Sprite> ("Pic/skill/" + currentSkillName.Substring (6)));
 
         //Debug.Log ("31" + gameObject);
         //gameObject.GetComponent<currentSkillName>().SetImg (imageFilled);

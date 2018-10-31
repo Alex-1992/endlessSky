@@ -103,7 +103,6 @@ public class GameControl : MonoBehaviour {
 
     public void ReStartGame () {
         //Application.LoadLevel ("SampleScene");
-        Debug.Log ("qqqqqqqqqqqqqqqqqqqqqqqqq");
         SceneManager.LoadScene ("SampleScene");
         //Instantiate (player, new Vector3(0,-2,0), Quaternion.Euler (new Vector3 (0, 0, 0)));
         PlayerControl.Current_HP = PlayerControl.Max_HP;
@@ -113,7 +112,6 @@ public class GameControl : MonoBehaviour {
     }
 
     public void GameOver () {
-        Debug.Log ("00000000000000000000");
         player.SetActive (false);
         //progressBarHP.size = 0;
         //gameObject.SetActive (false);
@@ -134,7 +132,7 @@ public class GameControl : MonoBehaviour {
         // for (int i = 0; i < dropChance.Count; i++) {
         //     if()
         // }
-        Debug.Log ("dropRuler" + dropRuler);
+        //Debug.Log ("dropRuler" + dropRuler);
         foreach (DropData data in dropChance) {
             if (data.chance >= dropRuler) {
                 //掉落相关物品
@@ -147,7 +145,7 @@ public class GameControl : MonoBehaviour {
         //判断掉率物品的数值
     }
     private void CreatDropItem (string itemName, Vector3 position) {
-        Debug.Log ("掉落物品" + itemName);
+        //Debug.Log ("掉落物品" + itemName);
         if (itemName == "skill") {
             //技能类别 技能等级
             List<SkillData> SkillList = player.GetComponent<PlayerControl> ().GetSkillList ();

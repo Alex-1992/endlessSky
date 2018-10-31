@@ -85,7 +85,7 @@ public class EnemyControl : MonoBehaviour
         if (obj.gameObject.name == "Player_bullet(Clone)")
         {
             //计算击中伤害 攻击-弹道-自施放-单次伤害
-           damage = Skill_jianzaihuopao.getSkillDamage();
+           damage = new Skill_jianzaihuopao().getSkillDamage();
             HP = HP - damage;
             Debug.Log(" 1 11 1 1 11111111111111111111111111111111111111");
             //销毁子弹

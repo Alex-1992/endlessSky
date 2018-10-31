@@ -25,9 +25,11 @@ public class Btn2BondSkill : MonoBehaviour {
         currentSkillName = "Skill_nengliangchang";
         Type t = Type.GetType (currentSkillName);
         //AddComponent<ttt> ();
+        Debug.Log ("Btn2  "+gameObject);
         gameObject.AddComponent (t);
         gameObject.SendMessage ("SetImg", imageFilled, SendMessageOptions.RequireReceiver);
         gameObject.SendMessage ("SetKeyCode", skillKey, SendMessageOptions.RequireReceiver);
+        gameObject.SendMessage ("SetCurrentBtn", gameObject, SendMessageOptions.RequireReceiver);
 
         imageFilled.sprite = Instantiate (Resources.Load<Sprite> ("Pic/skill/" + currentSkillName.Substring (6)));
         imageBack.sprite = Instantiate (Resources.Load<Sprite> ("Pic/skill/" + currentSkillName.Substring (6)));

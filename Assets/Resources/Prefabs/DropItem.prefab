@@ -73,8 +73,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.46461838, y: 0.43502602, z: 1}
+  m_Center: {x: 0.0033655465, y: 0.00000035068726, z: 0}
 --- !u!114 &114158912032511080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -86,6 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12a8e07476fea3408bd2568b3fa899e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 
   SkillLevel: 0
   SkillName: 
 --- !u!114 &114171215803798438
@@ -178,7 +179,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.061, y: -0.899}
+  m_AnchoredPosition: {x: 0.06099987, y: -1.62}
   m_SizeDelta: {x: 0.45, y: 0.45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224967309043486794
