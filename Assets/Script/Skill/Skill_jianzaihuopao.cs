@@ -14,13 +14,13 @@ public class Skill_jianzaihuopao : SkillBase {
 	private float timer = 0; //当前冷却时间    
 	private bool isCold = false; //是否进入冷却  
 	private float mpCost = 5;
-	//public static int SkillLevel = 1;
-	public static float SkillDamagePercent = 1;
-	
-	//public GameObject player;
+    private float SkillDamagePercent = 1;
+    //public static int SkillLevel = 1;
 
-	//子弹发射点
-	GameObject shotPointMiddle;
+    //public GameObject player;
+
+    //子弹发射点
+    GameObject shotPointMiddle;
 	GameObject shotPointLeft;
 	GameObject shotPointRight;
 	GameObject shotPointMiddle_down;
@@ -29,15 +29,15 @@ public class Skill_jianzaihuopao : SkillBase {
 
 	GameObject bullet;
 
-	public Skill_jianzaihuopao(){
-		
-	}
-	// Use this for initialization
-	void Start () {
+    private void Awake()
+    {
+    }
+    // Use this for initialization
+    void Start () {
+       
 
-
-		//imageFilled.fillAmount = 0;
-		shotPointMiddle = GameObject.Find ("player/shotPointMiddle");
+        //imageFilled.fillAmount = 0;
+        shotPointMiddle = GameObject.Find ("player/shotPointMiddle");
 		shotPointLeft = GameObject.Find ("player/shotPointLeft");
 		shotPointRight = GameObject.Find ("player/shotPointRight");
 		shotPointMiddle_down = GameObject.Find ("player/shotPointMiddle_down");
@@ -128,8 +128,8 @@ public class Skill_jianzaihuopao : SkillBase {
 	// }
 
 	public float getSkillDamage () {
-		Debug.Log( PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float) (SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2));
-		return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float) (SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2);
+        Debug.Log(PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float)(SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2));
+        return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float) (SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2);
 		
 	}
 }

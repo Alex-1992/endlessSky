@@ -12,8 +12,8 @@ public class Skill_nengliangchang : SkillBase {
     private float timer = 0; //当前冷却时间    
     private bool isCold = false; //是否进入冷却
     private float mpCost = 1;
+    private float SkillDamagePercent = 0.2f;
     //public static int SkillLevel = 1;
-    public static float SkillDamagePercent = 0.2f;
 
     private GameObject player;
     private GameObject Range_energy;
@@ -66,6 +66,7 @@ public class Skill_nengliangchang : SkillBase {
     // }
 
     public float getSkillDamage () {
+        Debug.Log(PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float)(SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2));
         return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float) (SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SkillBase : MonoBehaviour {
+    //public SkillBase _instance;
 
 	public Image imageFilled; //填充背景，及灰色读条
 	public KeyCode skillKey; //对应技能按键
@@ -13,10 +14,16 @@ public class SkillBase : MonoBehaviour {
 	private float timer; //当前冷却时间    
 	private bool isCold; //是否进入冷却  
 	private float mpCost;
-	public static int SkillLevel;
-	public float SkillDamagePercent;
+	public static int SkillLevel = 1;
 	public Text LevelText;
-	//以上变量需要继承;
+    //以上变量需要继承;
+    //private void Awake()
+    //{
+    //    _instance = this;
+    //}
+    public void Reset(){
+		Debug.LogError("Reset" + gameObject);
+	}
 
 	void Start () {
 		imageFilled.fillAmount = 0;
@@ -70,11 +77,16 @@ public class SkillBase : MonoBehaviour {
 		currentBtn = obj;
 	}
 
-	public void SetSkillLevel (int num) {
-		Debug.Log ("SkillBase:SetSkillLevel     " + "currentBtn:" + currentBtn);
+	public static void SetSkillLevel (int num) {
+		//Debug.Log ("SkillBase:SetSkillLevel     " + "currentBtn:" + currentBtn);
 		SkillLevel = num;
-		currentBtn.transform.Find ("LevelText").GetComponent<Text> ().text = "Lv" + num;
+		//if(gameObject != null){
+		//	gameObject.transform.Find ("LevelText").GetComponent<Text> ().text = "Lv" + num;
+		//}
+       
 	}
+
+     
 
 	// public static float getSkillDamage () {
 	// 	return 0;

@@ -6,7 +6,8 @@ using UnityEngine.UI;
 //using UnityEngine.Sprite;
 //[System.Serializable]
 
-public class Btn3BondSkill : MonoBehaviour {
+public class Btn3BondSkill : BtnBondSkill
+{
     public GameObject panel;
     public Image imageFilled;
     public Image imageBack;

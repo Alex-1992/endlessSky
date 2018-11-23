@@ -18,9 +18,12 @@ public class Enemy0 : MonoBehaviour {
 	public Scrollbar progressBar;
 	public ParticleSystem boom;
 
-	// Use this for initialization
-
-	void Start () {
+    // Use this for initialization
+    public void SetHP(float factor)
+    {
+        HP = HP * factor;
+    }
+    void Start () {
 
 	}
 

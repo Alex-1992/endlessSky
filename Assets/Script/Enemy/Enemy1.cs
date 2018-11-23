@@ -146,6 +146,10 @@ public class Enemy1 : MonoBehaviour {
 				blink ();
 			};
 	}
+    public void SetHP(float factor)
+    {
+        HP = HP * factor;
+    }
 	private void OnDestroy () {
 		//boom.Play();
 		Instantiate (boom, gameObject.transform.position, Quaternion.Euler (new Vector3 (0, 0, 0)));

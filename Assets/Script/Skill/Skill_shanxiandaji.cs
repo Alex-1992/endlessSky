@@ -14,18 +14,18 @@ public class Skill_shanxiandaji : SkillBase {
 	private bool isCold = false; //是否进入冷却    
 	private float mpCost = 40;
 	//public static int SkillLevel = 1; 
-	public static float SkillDamagePercent = 2; 
 	//public GameObject player;
 
 	private Sprite CircleSprite;
 	private Sprite OriginSprite;
+    private float SkillDamagePercent = 2;
 
-	GameObject player;
+    GameObject player;
 	GameObject enemyPool;
 
 	// Use this for initialization
 	void Start () {
-		imageFilled.fillAmount = 0;
+        imageFilled.fillAmount = 0;
 		OriginSprite = Instantiate (Resources.Load<Sprite> ("Pic/craft"));
 		CircleSprite = Instantiate (Resources.Load<Sprite> ("Pic/circle"));
 		player = GameObject.Find ("player");
@@ -141,6 +141,7 @@ public class Skill_shanxiandaji : SkillBase {
 	// }
 
 	public float getSkillDamage () {
-		return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float)(SkillDamagePercent + SkillDamagePercent * (SkillLevel -1) * 0.2);
-	}
+        Debug.Log(PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float)(SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2));
+        return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float)(SkillDamagePercent + SkillDamagePercent * (SkillLevel -1) * 0.2);
+    }
 }

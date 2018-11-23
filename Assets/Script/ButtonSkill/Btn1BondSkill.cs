@@ -6,7 +6,7 @@ using UnityEngine.UI;
 //using UnityEngine.Sprite;
 //[System.Serializable]
 
-public class Btn1BondSkill : MonoBehaviour {
+public class Btn1BondSkill : BtnBondSkill {
     public GameObject panel;
     public Image imageFilled;
     public Image imageBack;
@@ -25,6 +25,7 @@ public class Btn1BondSkill : MonoBehaviour {
         currentSkillName = "Skill_jianzaihuopao";
         Type t = Type.GetType (currentSkillName);
         //AddComponent<ttt> ();
+        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         Debug.Log ("Btn1  "+gameObject);
         gameObject.AddComponent (t);
         gameObject.SendMessage ("SetImg", imageFilled, SendMessageOptions.RequireReceiver);

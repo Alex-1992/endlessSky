@@ -14,9 +14,9 @@ public class PlayerControl : MonoBehaviour {
 
     //玩家移动速度
     public float speed = 5f;
-    public static float AttackNum = 6000;
+    public static float AttackNum = 60;
     public static float Max_HP = 500;
-    public static float Current_HP = 500000;
+    public static float Current_HP = 500;
     public static float HP_Recover_Persecond = 50;
     public static float Max_MP = 200;
     public static float Current_MP = 200;
@@ -74,9 +74,9 @@ public class PlayerControl : MonoBehaviour {
         Debug.Log (playerSkillList[0].describe);
         Debug.Log (playerSkillList[1].describe);
         Debug.Log (playerSkillList[2].describe);
-        Debug.Log (Tools.SetSkillLevelByName("Skill_jianzaihuopao", 10));
-        Debug.Log (Tools.SetSkillLevelByName("Skill_shanxiandaji", 10));
-        Debug.Log (Tools.SetSkillLevelByName("Skill_nengliangchang", 10));
+        //Debug.Log (Tools.SetSkillLevelByName("Skill_jianzaihuopao", 10));
+        //Debug.Log (Tools.SetSkillLevelByName("Skill_shanxiandaji", 10));
+        //Debug.Log (Tools.SetSkillLevelByName("Skill_nengliangchang", 10));
 
     }
 
@@ -169,18 +169,19 @@ public class PlayerControl : MonoBehaviour {
                         // Debug.Log ("311111111111111111111111111111111111111");
                         // gameObject.AddComponent (t);
                         string skillScript = skillInBag.script;
-                        Debug.Log ("技能脚本名" + skillScript);
-                        Type t = Type.GetType (skillScript);
-
-                        Debug.Log ("Skill Type:" + t);
+                        Tools.SetSkillLevelByName("skillScript", int.Parse(skillInBag.level));
+                        //Debug.Log ("技能脚本名" + skillScript);
+                        //Type t = Type.GetType (skillScript);
+                        
+                        //Debug.Log ("Skill Type:" + t);
                         //Type tp = typeof(skillScript);
-                        MethodInfo setLevel = t.GetMethod ("SetSkillLevel");
-                         Debug.Log ("Skill Type:" + t);
-                        //object o = t.Assembly.CreateInstance (skillScript);
-                        object o = Activator.CreateInstance (t);
-                        Debug.Log ("Activator.CreateInstance (t) object:" + o);
-                        setLevel.Invoke (o, new object[] { DropSkillLevel });
-                        skillInBag.level = DropSkillLevel + "";
+                        //MethodInfo setLevel = t.GetMethod ("SetSkillLevel");
+                        // Debug.Log ("Skill Type:" + t);
+                        ////object o = t.Assembly.CreateInstance (skillScript);
+                        //object o = Activator.CreateInstance (t);
+                        //Debug.Log ("Activator.CreateInstance (t) object:" + o);
+                        //setLevel.Invoke (o, new object[] { DropSkillLevel });
+                        //skillInBag.level = DropSkillLevel + "";
                         Destroy (obj.gameObject);
                         //Skill_jianzaihuopao.SetSkillLevel (3);
                     } else {
