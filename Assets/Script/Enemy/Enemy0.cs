@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Enemy0 : MonoBehaviour {
-
+    public GameObject player;
 	//敌人速度
 	//public Image handle;
 	public float speed = 1f;
-	public float HP = 300;
+	public float HP = 150;
+	public float MaxHP = 150;
 	public float AtkNum = 30;
 	private float shotCD = 0;
 	public float CD = 1f;
@@ -21,11 +22,13 @@ public class Enemy0 : MonoBehaviour {
     // Use this for initialization
     public void SetHP(float factor)
     {
+        MaxHP = MaxHP * factor;
         HP = HP * factor;
+        //AtkNum = AtkNum * factor;
     }
     void Start () {
-
-	}
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -95,22 +98,22 @@ public class Enemy0 : MonoBehaviour {
 		float damage = 0;
 		//Debug.Log(obj.gameObject.name);
 		if (obj.gameObject.name == "Player_bullet(Clone)") {
-			//计算击中伤害 攻击-弹道-自施放-单次伤害
-			damage = new Skill_jianzaihuopao().getSkillDamage();
-			HP = HP - damage;
+            //计算击中伤害 攻击-弹道-自施放-单次伤害
+            damage = player.GetComponent<Skill_jianzaihuopao>().GetSkillDamage();
+            HP = HP - damage;
 			//销毁子弹
 			Destroy (obj.gameObject);
 		} else if (obj.gameObject.name == "player") {
 			if (PlayerControl.IsBlinkFinished == false) {
-				HP = HP - new Skill_shanxiandaji().getSkillDamage();
-			} else if (HP < PlayerControl.Current_HP) {
+				HP = HP - player.GetComponent<Skill_shanxiandaji>().GetSkillDamage();
+            } else if (HP < PlayerControl.Current_HP) {
 				//表示player与敌人撞击 并且敌人死亡
 				PlayerControl.SufferDamage(HP);
 				//PlayerControl.Current_HP -= HP;
 				HP = 0;
 			} else {
 				//玩家死亡
-				PlayerControl.Current_HP = -1000;
+				PlayerControl.Current_HP = -10000;
 			}
 			//damage = PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Auto * PlayerControl.variable_Single;
 			//Debug.Log("enter range_energy");
@@ -123,7 +126,7 @@ public class Enemy0 : MonoBehaviour {
 		} else {
 			//血条扣血
 
-			progressBar.size = HP / 300;
+			progressBar.size = HP / MaxHP;
 		}
 
 		//实例化粒子特效
@@ -136,14 +139,14 @@ public class Enemy0 : MonoBehaviour {
 	void OnTriggerStay (Collider obj) {
 		//Debug.Log("stay range_energy");
 		if (obj.gameObject.name == "range_energy") {
-			HP = HP - new Skill_nengliangchang().getSkillDamage();
-			if (HP <= 0) {
+			HP = HP - player.GetComponent<Skill_nengliangchang>().GetSkillDamage();
+            if (HP <= 0) {
 				//Destroy(obj.gameObject);
 				//敌机死亡
 				Destroy (gameObject);
 			} else {
 				//血条扣血
-				progressBar.size = HP / 300;
+				progressBar.size = HP / MaxHP;
 			}
 		}
 

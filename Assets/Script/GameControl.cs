@@ -25,8 +25,8 @@ public class GameControl : MonoBehaviour
 
     //Dictionary<string, float> dropChance = new Dictionary<string, float> ();
     public List<DropData> dropChance = new List<DropData>() {
-        new DropData { name = "skill", chance = 1f },
-        new DropData { name = "artifact", chance = 0.3f }
+        new DropData { name = "skill", chance = 0.5f },
+        new DropData { name = "artifact", chance = 0f }
     };
 
     public class DropData
@@ -99,11 +99,11 @@ public class GameControl : MonoBehaviour
             GameObject go = Instantiate(enemy[enemyType], tempList[RandomIndex], Quaternion.Euler(new Vector3(0, 0, 0)), EnemyPool.transform);
             if (enemyType == 0)
             {
-                go.GetComponent<Enemy0>().SetHP((float)0.2 * (currentLevel - 1));
+                go.GetComponent<Enemy0>().SetHP(0.8f + 0.2f * currentLevel);
             }
             else
             {
-                go.GetComponent<Enemy1>().SetHP((float)0.2 * (currentLevel - 1));
+                go.GetComponent<Enemy1>().SetHP(0.8f + 0.2f * currentLevel);
             }
 
 
@@ -129,6 +129,7 @@ public class GameControl : MonoBehaviour
     public void ReStartGame()
     {
         //Application.LoadLevel ("SampleScene");
+        currentLevel = 1;
         SceneManager.LoadScene("SampleScene");
         //Instantiate (player, new Vector3(0,-2,0), Quaternion.Euler (new Vector3 (0, 0, 0)));
         PlayerControl.Current_HP = PlayerControl.Max_HP;
@@ -182,16 +183,17 @@ public class GameControl : MonoBehaviour
         if (itemName == "skill")
         {
             //技能类别 技能等级
-            List<SkillData> SkillList = player.GetComponent<PlayerControl>().GetSkillList();
+            List<SkillData> SkillList = player.GetComponent<PlayerControl>().GetTotalSkillList();
             int randomIndex = Random.Range(0, SkillList.Count);
             string skillName = SkillList[randomIndex].name;
             int skillLevel = GetItemLevel();
             string imgName = SkillList[randomIndex].img;
             GameObject dropObj = Instantiate(dropItem, position, Quaternion.Euler(new Vector3(0, 0, 0)));
             dropObj.transform.parent = battleCanvas.transform;
-            dropObj.GetComponent<DropItem>().SkillLevel = skillLevel;
-            dropObj.GetComponent<DropItem>().SkillName = skillName;
+            dropObj.GetComponent<DropItem>().level = skillLevel+"";
+            dropObj.GetComponent<DropItem>().name = skillName;
             dropObj.GetComponent<DropItem>().Type = "skill";
+            print("Pic/skill/" + imgName);
             dropObj.GetComponent<Image>().sprite = Instantiate(Resources.Load<Sprite>("Pic/skill/" + imgName));
 
             Text skillText = dropObj.transform.Find("Text").GetComponent<Text>();
@@ -215,7 +217,39 @@ public class GameControl : MonoBehaviour
         }
         else if (itemName == "artifact")
         {
+            List<ArtifactData> artifactList = player.GetComponent<PlayerControl>().GetTotalArtifactList();
+            int randomIndex = Random.Range(0, artifactList.Count);
+            //string artifact = artifactList[randomIndex].name;
+            int artifactLevel = GetItemLevel();
+            //string imgName = SkillList[randomIndex].img;
+            GameObject dropObj = Instantiate(dropItem, position, Quaternion.Euler(new Vector3(0, 0, 0)));
+            dropObj.transform.parent = battleCanvas.transform;
+            DropItem drop = new DropItem(artifactList[randomIndex]);
+            //dropObj.GetComponent<DropItem>()();
+            dropObj.GetComponent<DropItem>().Type = "artifact";
+            dropObj.GetComponent<DropItem>().id = drop.id;
+            dropObj.GetComponent<DropItem>().name = drop.name;
+            dropObj.GetComponent<DropItem>().describe = drop.describe;
+            dropObj.GetComponent<DropItem>().level = artifactLevel+"";
+            //dropObj.GetComponent<DropItem>().Type = "artifact";
+            //print("Pic/skill/" + imgName);
+            //dropObj.GetComponent<Image>().sprite = Instantiate(Resources.Load<Sprite>("Pic/skill/" + imgName));
 
+            Text levelText = dropObj.transform.Find("Text").GetComponent<Text>();
+            levelText.text = "Lv" + artifactLevel;
+
+            if (artifactLevel == currentLevel + 3)
+            {
+                levelText.color = Color.red;
+            }
+            else if (artifactLevel > currentLevel)
+            {
+                levelText.color = Color.yellow;
+            }
+            else
+            {
+                levelText.color = Color.green;
+            }
         }
     }
 

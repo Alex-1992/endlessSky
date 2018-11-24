@@ -9,24 +9,30 @@ public class Skill_shanxiandaji : SkillBase {
 	// public Image imageFilled; //填充背景，及灰色读条
 	// public KeyCode skillKey; //对应技能按键
 
-	private float coldTime = 2f; //技能的冷却时间    
-	private float timer = 0; //当前冷却时间    
-	private bool isCold = false; //是否进入冷却    
-	private float mpCost = 40;
-	//public static int SkillLevel = 1; 
-	//public GameObject player;
+	//private float coldTime = 2f; //技能的冷却时间    
+	//private float timer = 0; //当前冷却时间    
+	//private bool  isCold = false; //是否进入冷却    
+	//private float mpCost = 40;
+ //   private float SkillDamagePercent = 2;
+    //public static int SkillLevel = 1; 
+    //public GameObject player;
 
-	private Sprite CircleSprite;
+    private Sprite CircleSprite;
 	private Sprite OriginSprite;
-    private float SkillDamagePercent = 2;
+    
 
     GameObject player;
 	GameObject enemyPool;
 
 	// Use this for initialization
 	void Start () {
-        imageFilled.fillAmount = 0;
-		OriginSprite = Instantiate (Resources.Load<Sprite> ("Pic/craft"));
+        coldTime = 4f; //技能的冷却时间  
+        timer = 0; //当前冷却时间    
+        isCold = false; //是否进入冷却   
+        mpCost = 50;
+        SkillDamagePercent = 2;
+        //imageFilled.fillAmount = 0;
+        OriginSprite = Instantiate (Resources.Load<Sprite> ("Pic/craft"));
 		CircleSprite = Instantiate (Resources.Load<Sprite> ("Pic/circle"));
 		player = GameObject.Find ("player");
 		enemyPool = GameObject.Find ("EnemyPool");
@@ -67,13 +73,20 @@ public class Skill_shanxiandaji : SkillBase {
 				timer = 0;
 				imageFilled.fillAmount = 0;
 			} else {
-				imageFilled.fillAmount = (coldTime - timer) / coldTime; //冷却比例         
+                if (imageFilled != null)
+                {
+                    imageFilled.fillAmount = (coldTime - timer) / coldTime; //冷却比例
+                }
 			}
 		}
 	}
 
 	private void SkillKeyDown () {
-		//imageFilled.fillAmount = 0;
+        if (imageFilled != null)
+        {
+            imageFilled.fillAmount = 0;
+        }
+		
 		if (Input.GetKey (skillKey) && isCold == false && PlayerControl.Current_MP >= 40) {
 			blink ();
 			PlayerControl.Current_MP = PlayerControl.Current_MP - mpCost;

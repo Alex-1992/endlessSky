@@ -8,11 +8,11 @@ public class Skill_nengliangchang : SkillBase {
     // public Image imageFilled; //填充背景，及灰色读条
     // public KeyCode skillKey; //对应技能按键
 
-    private float coldTime = 0; //技能的冷却时间    
-    private float timer = 0; //当前冷却时间    
-    private bool isCold = false; //是否进入冷却
-    private float mpCost = 1;
-    private float SkillDamagePercent = 0.2f;
+    //private float coldTime = 0; //技能的冷却时间    
+    //private float timer = 0; //当前冷却时间    
+    //private bool  isCold = false; //是否进入冷却
+    //private float mpCost = 1;
+    //private float SkillDamagePercent = 0.2f;
     //public static int SkillLevel = 1;
 
     private GameObject player;
@@ -20,6 +20,11 @@ public class Skill_nengliangchang : SkillBase {
 
     // Use this for initialization
     void Start () {
+        coldTime = 0; //技能的冷却时间    
+        timer = 0; //当前冷却时间    
+        isCold = false; //是否进入冷却
+        mpCost = 1;
+        SkillDamagePercent = 0.2f;
         player = GameObject.Find ("player");
         Range_energy = player.transform.Find ("range_energy").gameObject;
         // GameObject parentObj = GameObject.Find("AAA");
@@ -34,7 +39,11 @@ public class Skill_nengliangchang : SkillBase {
     void Update () {
         if (Input.GetKey (skillKey)) {
             if (PlayerControl.Current_MP >= 0.3 * PlayerControl.Max_MP) {
-                imageFilled.fillAmount = 1;
+                if (imageFilled != null)
+                {
+                    imageFilled.fillAmount = 1;
+                }
+                
                 Range_energy.SetActive (true);
                 //btn2.transform.DOScale (new Vector3 (1.5f, 1.5f, 1.5f), 0.1f);
 
@@ -48,7 +57,10 @@ public class Skill_nengliangchang : SkillBase {
 
         if (Input.GetKeyUp (skillKey)) {
             Range_energy.SetActive (false);
-            imageFilled.fillAmount = 0;
+            if (imageFilled != null)
+            {
+                imageFilled.fillAmount = 0;
+            }
             //btn2.transform.DOScale (new Vector3 (1, 1, 1), 0.1f);
         }
     }

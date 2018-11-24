@@ -6,14 +6,20 @@ public class DropItem : MonoBehaviour {
 
 	// Use this for initialization
 	public string Type;
-	public int SkillLevel;
-	public string SkillName;
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    public string id;
+	public string level;
+	public string describe;
+	public new string name;
+
+	//public string artifactID;
+	//public string artifactLevel;
+    public DropItem(ArtifactData ad)
+    {
+        this.id = ad.id;
+        this.name = ad.name;
+        this.describe = ad.describe;
+        this.level = ad.level;
+    }
+
 }

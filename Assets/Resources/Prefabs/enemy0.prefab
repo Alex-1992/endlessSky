@@ -222,8 +222,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d0190ce91724b49a233d327868fb5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   speed: 2
-  HP: 300
+  HP: 150
+  MaxHP: 150
   AtkNum: 30
   CD: 0.5
   CanMove: 1

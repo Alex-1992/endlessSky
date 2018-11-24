@@ -35,11 +35,16 @@ public class Enemy_bullet : MonoBehaviour {
             Destroy(this.gameObject);
         }
         if(obj.gameObject.name == "player"){
-            PlayerControl.Current_HP -= Damage;
             Destroy(this.gameObject);
+            if (PlayerControl.WUDI == true) return;
+            PlayerControl.Current_HP -= Damage;
             //GameControl.ShakeScreen(0.1f);
             PlayerControl.SufferDamage(Damage);
-
+        }
+        if (obj.gameObject.name == "range_energy")
+        {
+            PlayerControl.Current_MP -= Damage;
+            Destroy(this.gameObject);
         }
     }
 }

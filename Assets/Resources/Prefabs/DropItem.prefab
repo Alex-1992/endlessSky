@@ -87,8 +87,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 
-  SkillLevel: 0
-  SkillName: 
+  id: 
+  level: 
+  describe: 
+  name: 
 --- !u!114 &114171215803798438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,7 +110,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 4295ffbef05c4a74191f7a2aabc078ec, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

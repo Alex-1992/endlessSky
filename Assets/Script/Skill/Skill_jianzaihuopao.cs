@@ -6,16 +6,16 @@ using UnityEngine.UI;
 public class Skill_jianzaihuopao : SkillBase {
 
 	// public Image imageFilled; //填充背景，及灰色读条
-	// public KeyCode skillKey; //对应技能按键
+    //public KeyCode skillKey; //对应技能按键
 	// public static GameObject currentBtn;//当前绑定的按钮
 	// public Text LevelText;
 
-	private float coldTime = 0.2f; //技能的冷却时间    
-	private float timer = 0; //当前冷却时间    
-	private bool isCold = false; //是否进入冷却  
-	private float mpCost = 5;
-    private float SkillDamagePercent = 1;
-    //public static int SkillLevel = 1;
+	//private float coldTime = 0.2f; //技能的冷却时间    
+	//private float timer = 0; //当前冷却时间    
+	//private bool  isCold = false; //是否进入冷却  
+	//private float mpCost = 5;
+ //   private float SkillDamagePercent = 1;
+ //   public int    SkillLevel = 1;
 
     //public GameObject player;
 
@@ -29,13 +29,28 @@ public class Skill_jianzaihuopao : SkillBase {
 
 	GameObject bullet;
 
-    private void Awake()
-    {
-    }
+    
+    //private void Awake()
+    //{
+    //    coldTime = 0.2f;
+    //    timer = 0; //当前冷却时间 
+    //    isCold = false; //是否进入
+    //    mpCost = 5;
+    //    SkillDamagePercent = 1;
+    //    SkillLevel = 1;
+    //    print("Awake");
+    //    print("SkillDamagePercent:    " + SkillDamagePercent);
+    //}
     // Use this for initialization
     void Start () {
-       
-
+        coldTime = 0.2f;
+        timer = 0; //当前冷却时间 
+        isCold = false; //是否进入
+        mpCost = 15;
+        SkillDamagePercent = 1;
+        SkillLevel = 1;
+        print("Start");
+        print("SkillDamagePercent:    " + SkillDamagePercent);
         //imageFilled.fillAmount = 0;
         shotPointMiddle = GameObject.Find ("player/shotPointMiddle");
 		shotPointLeft = GameObject.Find ("player/shotPointLeft");
@@ -69,15 +84,25 @@ public class Skill_jianzaihuopao : SkillBase {
 				//冷却完毕，回归默认值               
 				isCold = false;
 				timer = 0;
-				imageFilled.fillAmount = 0;
+                if (imageFilled != null)
+                {
+                    imageFilled.fillAmount = 0;
+                }
+               
 			} else {
-				imageFilled.fillAmount = (coldTime - timer) / coldTime; //冷却比例         
-			}
+                if (imageFilled != null)
+                {
+                    imageFilled.fillAmount = (coldTime - timer) / coldTime; //冷却比例
+                }
+            }
 		}
 	}
 
 	private void SkillKeyDown () {
-		//imageFilled.fillAmount = 0;
+        if (imageFilled != null)
+        {
+            imageFilled.fillAmount = 0;
+        }
 		if (Input.GetKey (skillKey) && isCold == false) {
 			PlaySkill ();
 			PlayerControl.Current_MP = PlayerControl.Current_MP - mpCost;
@@ -127,9 +152,11 @@ public class Skill_jianzaihuopao : SkillBase {
 	// 	currentBtn.transform.Find("LevelText").GetComponent<Text>().text = "Lv"+ num;
 	// }
 
-	public float getSkillDamage () {
-        Debug.Log(PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float)(SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2));
-        return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float) (SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2);
+	//public float GetSkillDamage () {
+ //       print("SkillDamagePercent               " +SkillDamagePercent);
+ //       print("this.SkillDamagePercent               " + this.SkillDamagePercent);
+ //       Debug.Log(PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float)(this.SkillDamagePercent + this.SkillDamagePercent * (SkillLevel - 1) * 0.2));
+ //       return PlayerControl.AttackNum * PlayerControl.variable_Attack * PlayerControl.variable_Bullet * PlayerControl.variable_Single * (float) (SkillDamagePercent + SkillDamagePercent * (SkillLevel - 1) * 0.2);
 		
-	}
+	//}
 }
