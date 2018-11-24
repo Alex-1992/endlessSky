@@ -304,6 +304,19 @@ public class PlayerControl : MonoBehaviour
             {
                 if (playerArtifactList.Count == 0)
                 {
+
+
+                    if (dropContent.id == "0")
+                    {
+                        //范围
+                        Range_energy.transform.localScale *= 2f;
+                    }
+                    else
+                    {
+                        //弹道
+                        gameObject.GetComponent<Skill_jianzaihuopao>().coldTime = 0.05f;
+                    }
+
                     //没有该神器，新加;
                     print("新加神器");
                     print("神器等级:" + dropContent.level);
@@ -324,7 +337,7 @@ public class PlayerControl : MonoBehaviour
                         return;
                     }
                 }
-                //没有该神器，新加;
+               
 
                 if (dropContent.id == "0")
                 {
@@ -336,6 +349,8 @@ public class PlayerControl : MonoBehaviour
                     //弹道
                     gameObject.GetComponent<Skill_jianzaihuopao>().coldTime = 0.05f;
                 }
+
+                //没有该神器，新加;
 
                 print("新加神器");
                 print("神器等级:" + dropContent.level);

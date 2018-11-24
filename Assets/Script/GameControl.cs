@@ -25,8 +25,8 @@ public class GameControl : MonoBehaviour
 
     //Dictionary<string, float> dropChance = new Dictionary<string, float> ();
     public List<DropData> dropChance = new List<DropData>() {
-        new DropData { name = "skill", chance = 0.5f },
-        new DropData { name = "artifact", chance = 0f }
+        new DropData { name = "skill", chance = 0.2f },
+        new DropData { name = "artifact", chance = 0.2f }
     };
 
     public class DropData

@@ -46,7 +46,7 @@ public class Skill_jianzaihuopao : SkillBase {
         coldTime = 0.2f;
         timer = 0; //当前冷却时间 
         isCold = false; //是否进入
-        mpCost = 15;
+        mpCost = 10;
         SkillDamagePercent = 1;
         SkillLevel = 1;
         print("Start");
@@ -103,7 +103,7 @@ public class Skill_jianzaihuopao : SkillBase {
         {
             imageFilled.fillAmount = 0;
         }
-		if (Input.GetKey (skillKey) && isCold == false) {
+		if (Input.GetKey (skillKey) && isCold == false && PlayerControl.Current_MP >= mpCost) {
 			PlaySkill ();
 			PlayerControl.Current_MP = PlayerControl.Current_MP - mpCost;
 			isCold = true;
