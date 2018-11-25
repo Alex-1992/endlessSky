@@ -174,7 +174,10 @@ public class BtnBondSkill : MonoBehaviour
     public void OnMouseEnter()
     {
         print("OnMouseEnter");
-        describePanel.SetActive(true);
+        if(describeText.text != "")
+        {
+            describePanel.SetActive(true);
+        }
     }
 
     public void OnMouseExit()

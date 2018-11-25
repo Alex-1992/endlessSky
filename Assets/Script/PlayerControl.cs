@@ -15,9 +15,9 @@ public class PlayerControl : MonoBehaviour
 
     //玩家移动速度
     public float speed = 5f;
-    public static float AttackNum = 60;
-    public static float Max_HP = 1000;
-    public static float Current_HP = 1000;
+    public static float AttackNum = 20;
+    public static float Max_HP = 700;
+    public static float Current_HP = 700;
     public static float HP_Recover_Persecond = 50;
     public static float Max_MP = 200;
     public static float Current_MP = 200;
@@ -37,6 +37,7 @@ public class PlayerControl : MonoBehaviour
     public GameObject Button1;
     public GameObject Button3;
     public GameObject ArtifactPanel;
+    public GameObject equipPanel;
     public GameObject ArtifactPrefab;
 
     // public Button btn1;
@@ -67,13 +68,25 @@ public class PlayerControl : MonoBehaviour
     public List<SkillData> skillList = new List<SkillData>();
     public List<SkillData> playerSkillList;
     public List<ArtifactData> artifactList = new List<ArtifactData>()
-    { new ArtifactData("0","增幅器","带有 范围 词缀的技能的范围效果增加200%（LvMax）","1"),
-      new ArtifactData("1","加速器","带有 弹道 词缀的技能的攻击速度增加400%（LvMax）","1"),
-      new ArtifactData("2","聚能器","当你在4秒内没有攻击时，将会获得一个持续1秒的伤害buff，提高造成的伤害60%（Lv1）","1"),
-      new ArtifactData("3","对撞器","当你对敌人造成伤害时，你距离敌人越近，伤害越高。最高加成40%（Lv1）","1"),
-      new ArtifactData("4","重置器","当你消灭敌人时，有10%的几率刷新技能冷却。有3%的几率重置技能冷却。（Lv1）","1")
+    //满级10级
+    { new ArtifactData("0","增幅器","带有 范围 词缀的技能的范围效果增加","1","zengfu"),
+      new ArtifactData("1","加速器","带有 弹道 词缀的技能的攻击速度增加","1","jiasu"),
+      new ArtifactData("2","浓缩器","所有技能的MP消耗减少10%（Lv1）","1","nongsuo"),
+      new ArtifactData("3","聚能器","当你在4秒内没有攻击时，将会获得一个持续1秒的伤害buff，提高造成的伤害60%（Lv1）","1","juneng"),
+      new ArtifactData("4","对撞器","当你对敌人造成伤害时，你距离敌人越近，伤害越高。最高加成40%（Lv1）","1","duizhuang"),
+      new ArtifactData("5","重置器","当你消灭敌人时，有10%的几率刷新技能冷却。有3%的几率重置技能冷却。（Lv1）","1","chongzhi"),
+      new ArtifactData("6","加能器","当你使用技能时，额外造成当前魔法值的10%的伤害。（Lv1）","1","jianeng")
     };
     public List<ArtifactData> playerArtifactList = new List<ArtifactData>();
+
+
+    public List<EquipData> equipList = new List<EquipData>()
+    //满级10级
+    { new EquipData("1","红色核心","增加50%攻击力","atk","50","red"),
+      new EquipData("2","黄色核心","增加100%HP和MP恢复","hpmp","100","yellow"),
+      new EquipData("3","绿色核心","增加50%最大生命","maxhp","50","blue")
+    };
+    public List<EquipData> playerEquipList = new List<EquipData>();
     // Use this for initialization
     void Start()
     {
@@ -136,6 +149,8 @@ public class PlayerControl : MonoBehaviour
             progressBarMP.size = Current_MP / Max_MP;
         }
 
+        if (Current_HP > Max_HP) Current_HP = Max_HP;
+
         if (Current_HP <= 0)
         {
             //progressBarMP.size = 0;
@@ -180,6 +195,16 @@ public class PlayerControl : MonoBehaviour
         return artifactList;
     }
 
+    public List<EquipData> GetPlayerEquipList()
+    {
+        return playerEquipList;
+    }
+
+    public List<EquipData> GetTotalEquipList()
+    {
+        return equipList;
+    }
+
     private SkillData FetchSkillByNameTotal(string name)
     {
         foreach (SkillData s in skillList)
@@ -220,12 +245,38 @@ public class PlayerControl : MonoBehaviour
         return null;
     }
 
+    private EquipData FetchEquipById(string id)
+    {
+        foreach (EquipData s in playerEquipList)
+        {
+
+            if (s.id == id)
+            {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    private EquipData GetEquipById(string id)
+    {
+        foreach (EquipData s in equipList)
+        {
+
+            if (s.id == id)
+            {
+                return s;
+            }
+        }
+        return null;
+    }
     void OnTriggerEnter(Collider obj)
     {
         //Debug.Log(obj.gameObject.GetComponent<EnemyControl>().HP);
         if (obj.gameObject.name == "DropItem" || obj.gameObject.name == "DropItem(Clone)")
         {
             DropItem dropContent = obj.gameObject.GetComponent<DropItem>();
+            Destroy(obj.gameObject);
             if (dropContent.Type == "skill")
             {
                 Debug.Log("掉落技能！");
@@ -260,14 +311,15 @@ public class PlayerControl : MonoBehaviour
                         //// gameObject.AddComponent (t);
                         //string skillScript = skillInBag.script;
                         //// Tools.SetSkillLevelByName("skillScript", int.Parse(skillInBag.level));
-                        if(skillInBag.bond_btn == "Button1")
+                        if (skillInBag.bond_btn == "Button1")
                         {
                             GameObject.FindGameObjectWithTag("BTN1").GetComponent<BtnBondSkill>().SetLevelText("Lv" + DropSkillLevel);
-                        }else if (skillInBag.bond_btn == "Button3")
+                        }
+                        else if (skillInBag.bond_btn == "Button3")
                         {
                             GameObject.FindGameObjectWithTag("BTN3").GetComponent<BtnBondSkill>().SetLevelText("Lv" + DropSkillLevel);
                         }
-                        
+
 
                         ////Debug.Log ("技能脚本名" + skillScript);
                         ////Type t = Type.GetType (skillScript);
@@ -281,13 +333,11 @@ public class PlayerControl : MonoBehaviour
                         ////Debug.Log ("Activator.CreateInstance (t) object:" + o);
                         //setLevel.Invoke (o, new object[] { DropSkillLevel });
                         //skillInBag.level = DropSkillLevel + "";
-                        Destroy(obj.gameObject);
                         //Skill_jianzaihuopao.SetSkillLevel (3);
                     }
                     else
                     {
                         //表示有该技能 但掉落技能等级低于等于现有，销毁掉落技能，回收金币
-                        Destroy(obj.gameObject);
                     }
                 }
                 else
@@ -297,35 +347,37 @@ public class PlayerControl : MonoBehaviour
                     SkillData sd = FetchSkillByNameTotal(dropContent.name);
                     sd.level = dropContent.level + "";
                     playerSkillList.Add(sd);
-                    Destroy(obj.gameObject);
                 }
             }
             if (dropContent.Type == "artifact")
             {
+                ArtifactData ad = FetchAtByIdTotal(dropContent.id);
+               
                 if (playerArtifactList.Count == 0)
                 {
+                    //没有该神器，新加;
+                    GameObject go = Instantiate(ArtifactPrefab, ArtifactPanel.transform);
+                    print("新加神器");
+                    print("神器等级:" + dropContent.level);
 
-
-                    if (dropContent.id == "0")
+                    ad.level = dropContent.level + "";
+                    playerArtifactList.Add(ad);
+                    //GameObject go = Instantiate(ArtifactPrefab, ArtifactPanel.transform);
+                    if (ad.id == "0")
                     {
-                        //范围
-                        Range_energy.transform.localScale *= 2f;
+                        Range_energy.transform.localScale *= 1f + int.Parse(ad.level) * 0.1f;
+                        go.GetComponent<Artifact>().SetContent(ad.level, ad.name + "\n" + ad.describe + (int.Parse(ad.level) * 0.1f + 1f) * 100 + "%（Lv" + ad.level + "）");
+                    }
+                    else if (ad.id == "1")
+                    {
+                        gameObject.GetComponent<Skill_jianzaihuopao>().coldTime = 0.2f - 0.015f * int.Parse(ad.level);
+                        go.GetComponent<Artifact>().SetContent(ad.level, ad.name + "\n" + ad.describe + (int.Parse(ad.level) * 0.3f + 1f) * 100 + "%（Lv" + ad.level + "）");
                     }
                     else
                     {
-                        //弹道
-                        gameObject.GetComponent<Skill_jianzaihuopao>().coldTime = 0.05f;
+                        go.GetComponent<Artifact>().SetContent(ad.level, ad.name + "\n" + ad.describe);
                     }
-
-                    //没有该神器，新加;
-                    print("新加神器");
-                    print("神器等级:" + dropContent.level);
-                    ArtifactData ad = FetchAtByIdTotal(dropContent.id);
-                    ad.level = dropContent.level + "";
-                    playerArtifactList.Add(ad);
-                    GameObject go = Instantiate(ArtifactPrefab, ArtifactPanel.transform);
-                    go.GetComponent<Artifact>().SetContent(ad.level, ad.name + "\n" + ad.describe);
-                    Destroy(obj.gameObject);
+                    go.GetComponent<Artifact>().SetImage(ad.img);
                     return;
                 }
                 foreach (var at in playerArtifactList)
@@ -333,34 +385,95 @@ public class PlayerControl : MonoBehaviour
                     if (at.id == dropContent.id)
                     {
                         //表示已有该神器，判断等级 
-                        Destroy(obj.gameObject);
+                        if (int.Parse(at.level) >= int.Parse(dropContent.level))
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            //要升级神器
+                            //GameObject goo = Instantiate(ArtifactPrefab, ArtifactPanel.transform);
+                            if (at.id == "0")
+                            {
+                                Range_energy.transform.localScale *= 1f + int.Parse(ad.level) * 0.1f;
+                               //goo.GetComponent<Artifact>().SetContent(ad.level, ad.name + "\n" + ad.describe + (int.Parse(ad.level) * 0.1f + 1f) * 100 + "%（Lv" + ad.level + "）");
+                            }
+                            else if (at.id == "1")
+                            {
+                                //弹道
+                                gameObject.GetComponent<Skill_jianzaihuopao>().coldTime = 0.2f - 0.015f * int.Parse(ad.level);
+                                //goo.GetComponent<Artifact>().SetContent(ad.level, ad.name + "\n" + ad.describe + (int.Parse(ad.level) * 0.3f + 1f) * 100 + "%（Lv" + ad.level + "）");
+                            }
+                            else
+                            {
+                               // goo.GetComponent<Artifact>().SetContent(ad.level, ad.name + "\n" + ad.describe);
+                            }
+                        }
                         return;
                     }
                 }
-               
+                playerArtifactList.Add(ad);
 
-                if (dropContent.id == "0")
+                if (playerArtifactList.Count >= 4)
+                {
+                    return;
+                }
+                print("新加神器");
+                print("神器等级:" + dropContent.level);
+                //ArtifactData add = FetchAtByIdTotal(dropContent.id);
+                GameObject goo = Instantiate(ArtifactPrefab, ArtifactPanel.transform);
+                goo.GetComponent<Artifact>().SetImage(ad.img);
+                ad.level = dropContent.level + "";
+               ;
+                
+                if (ad.id == "0")
                 {
                     //范围
-                    Range_energy.transform.localScale *= 2f;
+                    Range_energy.transform.localScale *= 1f + int.Parse(ad.level) * 0.1f;
+                    goo.GetComponent<Artifact>().SetContent(ad.level, ad.name + "\n" + ad.describe + (int.Parse(ad.level) * 0.1f + 1f) * 100 + "%（Lv" + ad.level + "）");
+
+                }
+                else if (ad.id == "1")
+                {
+                    //弹道
+                    gameObject.GetComponent<Skill_jianzaihuopao>().coldTime = 0.2f - 0.015f * int.Parse(ad.level);
+                    goo.GetComponent<Artifact>().SetContent(ad.level, ad.name + "\n" + ad.describe + (int.Parse(ad.level) * 0.3f + 1f) * 100 + "%（Lv" + ad.level + "）");
+
                 }
                 else
                 {
-                    //弹道
-                    gameObject.GetComponent<Skill_jianzaihuopao>().coldTime = 0.05f;
+                    goo.GetComponent<Artifact>().SetContent(ad.level, ad.name + "\n" + ad.describe);
                 }
 
                 //没有该神器，新加;
 
-                print("新加神器");
-                print("神器等级:" + dropContent.level);
-                ArtifactData add = FetchAtByIdTotal(dropContent.id);
-                add.level = dropContent.level + "";
-                playerArtifactList.Add(add);
-                GameObject goo = Instantiate(ArtifactPrefab, ArtifactPanel.transform);
-                goo.GetComponent<Artifact>().SetContent(add.level, add.name + "\n" + add.describe);
 
-                Destroy(obj.gameObject);
+                //GameObject goo = Instantiate(ArtifactPrefab, ArtifactPanel.transform);
+                //goo.GetComponent<Artifact>().SetContent(ad.level, ad.name + "\n" + ad.describe);
+
+            }
+            if (dropContent.Type == "equip")
+            {
+                print("equipequipequipequipequip");
+                EquipData equipInBag = FetchEquipById(dropContent.id);
+                if (equipInBag == null)
+                {
+                    //表示背包莫得该装备 得到该装备
+                    EquipData ed = GetEquipById(dropContent.id);
+                    if (playerEquipList.Count == 0)
+                    {
+                        //表示玩家没有装备 直接给玩家装备
+                        equipPanel.GetComponent<EquipPanel>().AutoEquip(ed);
+                    }
+                    // 加入玩家背包 
+                    playerEquipList.Add(ed);
+                    Destroy(obj.gameObject);
+                }
+                else
+                {
+                    //表示背包已有该装备
+                    Destroy(obj.gameObject);
+                }
             }
         }
     }

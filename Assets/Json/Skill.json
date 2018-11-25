@@ -1,7 +1,7 @@
 [{
 		"id": "1",
 		"name": "舰载火炮",
-		"describe": "舰载火炮\n攻击-弹道-单次\nMPcost:10/S CD:0.2S 伤害：较低\n向自身周围发出火炮攻击",
+		"describe": "舰载火炮\n攻击-弹道-单次\nMPcost:10/S CD:0.2S 基础伤害：ATK*3 \n向自身周围发出火炮攻击",
 		"img": "jianzaihuopao",
 		"damage_factor": "1",
 		"level": "1",
@@ -14,7 +14,7 @@
 	{
 		"id": "2",
 		"name": "能量场",
-		"describe": "能量场\n攻击-范围-持续\nMPcost:40/S CD:无 伤害：较高\n技能开启时会消耗MP抵挡敌机子弹",
+		"describe": "能量场\n攻击-范围-持续\nMPcost:40/S CD:无 基础伤害：ATK+MP恢复+HP恢复\n技能开启时会消耗MP抵挡敌机子弹",
 		"img": "nengliangchang",
 		"damage_factor": "1",
 		"level": "1",
@@ -27,7 +27,7 @@
 	{
 		"id": "3",
 		"name": "闪现冲撞",
-		"describe": "闪现冲撞\n攻击-范围-单次\nMPcost:50/S CD:4S 伤害：低\n技能施放过程中增加其它技能伤害",
+		"describe": "闪现冲撞\n攻击-范围-单次\nMPcost:50/S CD:4S 基础伤害：ATK+0.1*MaxHP\n技能施放过程中增加其它技能伤害",
 		"img": "shanxianchongzhuang",
 		"damage_factor": "1",
 		"level": "1",

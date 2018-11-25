@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BTN1
   - BTN3
+  - ck
   layers:
   - Default
   - TransparentFX

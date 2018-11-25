@@ -43,7 +43,7 @@ public class Enemy_bullet : MonoBehaviour {
         }
         if (obj.gameObject.name == "range_energy")
         {
-            PlayerControl.Current_MP -= Damage;
+            PlayerControl.Current_MP -= Damage * 0.2f;
             Destroy(this.gameObject);
         }
     }
